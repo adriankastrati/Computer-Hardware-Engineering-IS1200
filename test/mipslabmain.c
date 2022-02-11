@@ -10,6 +10,8 @@
 #include <stdint.h>   /* Declarations of uint_32 and the like */
 #include <pic32mx.h>  /* Declarations of system-specific addresses etc */
 #include "mipslab.h"  /* Declatations for these labs */
+#include <stdlib.h>
+
 
 int main(void) {
         /*
@@ -60,8 +62,9 @@ int main(void) {
 	display_string(2, "Engineering");
 	display_string(3, "Welcome!");
 	display_update();
+
 	
-	display_image(0, icon, 50);
+	display_image(96, icon, 32);
 	
 	labinit(); /* Do any lab-specific initialization */
 

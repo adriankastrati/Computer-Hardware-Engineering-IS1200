@@ -6,17 +6,21 @@
    This file should be changed by YOU! So you must
    add comment(s) here with your name(s) and date(s):
 
-   This file modified 2017-04-31 by Ture Teknolog 
+   This file modified 2022-02-09 by Deni Persson
 
    For copyright and licensing, see file COPYING */
 
 #include <stdint.h>   /* Declarations of uint_32 and the like */
 #include <pic32mx.h>  /* Declarations of system-specific addresses etc */
 #include "mipslab.h"  /* Declatations for these labs */
+#include <stdlib.h>
+
 
 int mytime = 0x5957;
 
 char textstring[] = "text, more text, and even more text!";
+
+int i = 1;
 
 /* Interrupt Service Routine */
 void user_isr( void )
@@ -38,5 +42,12 @@ void labwork( void )
   display_string( 3, textstring );
   display_update();
   tick( &mytime );
-  display_image(96, icon);
+
+  int c;
+  for(c = 0; c< 128; c++)
+  {
+    car[c] = (car[c] >> i);
+    
+  }
+  display_image(90, car, 32);
 }
