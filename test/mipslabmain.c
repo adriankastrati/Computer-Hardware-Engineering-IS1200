@@ -13,7 +13,7 @@
 
 int main(void) {
         /*
-	  This will set the peripheral bus clock to the same frequency
+	  This will set the psudo apt-get install bzip2 make libftdi-deveripheral bus clock to the same frequency
 	  as the sysclock. That means 80 MHz, when the microcontroller
 	  is running at 80 MHz. Changed 2017, as recommended by Axel.
 	*/
@@ -61,7 +61,7 @@ int main(void) {
 	display_string(3, "Welcome!");
 	display_update();
 	
-	display_image(40, icon);
+	display_image(0, icon);
 	
 	labinit(); /* Do any lab-specific initialization */
 
