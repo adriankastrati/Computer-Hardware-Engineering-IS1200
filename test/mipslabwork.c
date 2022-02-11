@@ -20,7 +20,7 @@ int mytime = 0x5957;
 
 char textstring[] = "text, more text, and even more text!";
 
-int i = 1;
+int i = 0;
 
 /* Interrupt Service Routine */
 void user_isr( void )
@@ -44,10 +44,33 @@ void labwork( void )
   tick( &mytime );
 
   int c;
-  for(c = 0; c< 128; c++)
-  {
-    car[c] = (car[c] >> i);
-    
+  //btn 1
+  if(((PORTF >> 1) & 1) == 1){
+    i = -1;
   }
+
+  //btn 
+   else if(((PORTD & 0xE0) >> 4)  == 1){
+    i = 1;
+  }
+  else{
+  i = 0;
+  }
+  if (i == 1){
+    for(c = 0; c< 128; c++)
+    {
+      
+      car[c] = (car[c] >> i);
+      
+    }
+  }
+  else {
+   for(c = 0; c< 128; c++)
+    {
+      
+      car[c] = (car[c] << i);
+      
+    }
+}
   display_image(90, car, 32);
 }
