@@ -45,32 +45,35 @@ void labwork( void )
 
   int c;
   //btn 1
-  if(((PORTF >> 1) & 1) == 1){
-    i = -1;
+  if(((PORTF & 0x2) >> 1) == 1){
+    i = 1;
   }
 
-  //btn 
-   else if(((PORTD & 0xE0) >> 4)  == 1){
-    i = 1;
+  //btn 2
+   else if(((PORTD >> 5) & 1)  == 1){
+    i = -1;
   }
   else{
   i = 0;
   }
+
   if (i == 1){
     for(c = 0; c< 128; c++)
     {
       
-      car[c] = (car[c] >> i);
+      car[c] = (car[c] >> 1);
       
     }
   }
-  else {
-   for(c = 0; c< 128; c++)
+
+  else if (i == -1){
+   for(c = 0; c < 128; c++)
     {
       
-      car[c] = (car[c] << i);
+      car[c] = (car[c] << 1);
       
     }
-}
+  }
+  
   display_image(90, car, 32);
 }
