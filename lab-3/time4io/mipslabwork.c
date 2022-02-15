@@ -26,9 +26,11 @@ void user_isr( void ){
 
 /* Lab-specific initialization goes here */
 void labinit( void ){
-  int volatile* led_init =  0xbf886100;
-  *led_init &= ~0xff; 
+  volatile int *p_TRISE =  0xbf886100;
+  *p_TRISE &= ~0xff; 
 
+  volatile int *p_PORTE = 0xbf886110;
+  *p_PORTE &= ~0xff;
 }
 
 /* This function is called repetitively from the main program */
@@ -38,14 +40,12 @@ void labwork( void ){
   time2string( textstring, mytime );
   display_string( 3, textstring );
   display_update();
-  
   tick( &mytime );
+ 
+  volatile int *p_PORTE = 0xbf886110;
 
-  int volatile* led_switcher = 0xbf886110;
-  int led_value = 0;
-  led_switcher &= led_value;
-  led_value++;
-
+  *p_PORTE = (*p_PORTE & ~0xff) + (((char) *p_PORTE & 0xff) + 1);
+  
 
   display_image(96, icon);
 }
