@@ -329,7 +329,7 @@ void display_string(int line, char *s) {
 	if(!s)
 		return;
 	
-	for(i = 0; i < 16; i++)
+	for(i = 0; i < 20; i++)
 		if(*s) {
 			textbuffer[line][i] = *s;
 			s++;
