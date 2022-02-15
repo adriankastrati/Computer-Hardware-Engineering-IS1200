@@ -29,7 +29,6 @@ void labinit( void ){
   int volatile* led_init =  0xbf886100;
   *led_init &= ~0xff; 
 
-  return;
 }
 
 /* This function is called repetitively from the main program */
@@ -42,9 +41,10 @@ void labwork( void ){
   
   tick( &mytime );
 
-  int volatile* led_value = 0xbf886110;
-
-  led_value = *led_value | 0x1;
+  int volatile* led_switcher = 0xbf886110;
+  int led_value = 0;
+  led_switcher &= led_value;
+  led_value++;
 
 
   display_image(96, icon);
