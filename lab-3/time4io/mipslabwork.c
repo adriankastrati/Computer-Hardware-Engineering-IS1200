@@ -37,25 +37,7 @@ void labinit( void ){
   // set bits of 1111 1110 000 to input (buttons)
   TRISD |= 0xfe0;
 
-  //add code to initialize Timer 2 for timeouts every 100 ms (that is 10 timeouts per second). 
-  //Be prepared to justify your choices of clock-rate divider and time-out period.
-
-  //Timer 2 operates at 80 MHz
-/*
-  //clears timer 2 bit 15 and 1
-  T2CONCLEAR = 1 << 15;
-  T2CONCLEAR = 1 << 1;
-  
-  //resets the timervalue
-  TMR2 = 0x0;
-  
-  //prescale
-  T2CONSET = 101 << 4; 
-
-  //turn on timer
-  T2CONSET = 1 << 15;
-  */
-  }
+}
 
 /* This function is called repetitively from the main program */
 void labwork( void ){
