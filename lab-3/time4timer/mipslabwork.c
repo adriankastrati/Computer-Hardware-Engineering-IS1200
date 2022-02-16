@@ -17,6 +17,7 @@
 int mytime = 0x5957;
 
 char textstring[] = "text, more text, and even more text!";
+int timeoutcount = 0;
 
 /* Interrupt Service Routine */
 void user_isr( void ){
@@ -100,18 +101,24 @@ void labwork( void ){
       IFSCLR(0) = 1 << 8;
     } 
   }
-  
 
-  time2string( textstring, mytime );
-  display_string( 3, textstring );
-  display_update();
+  timeoutcount++;
+
+  
+  if(timeoutcount == 10){
+    time2string( textstring, mytime );
+    display_string( 3, textstring );
+    display_update();
 
 
-  tick( &mytime );
-  
-  // update lighs
-  volatile int *p_PORTE = 0xbf886110;
-  *p_PORTE = (*p_PORTE & ~0xff) + (((char) *p_PORTE & 0xff) + 1);
-  
-  display_image(96, icon);
+    tick( &mytime );
+    
+    // update lighs
+    volatile int *p_PORTE = 0xbf886110;
+    *p_PORTE = (*p_PORTE & ~0xff) + (((char) *p_PORTE & 0xff) + 1);
+    
+    display_image(96, icon);
+    timeoutcount = 0;
+  }
+
 }
