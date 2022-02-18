@@ -15,6 +15,9 @@
 #define DISPLAY_TURN_OFF_VDD (PORTFSET = 0x40)
 #define DISPLAY_TURN_OFF_VBAT (PORTFSET = 0x20)
 
+
+
+
 /* quicksleep:
    A simple function to create a small delay.
    Very inefficient use of computing resources,
@@ -25,6 +28,48 @@ void quicksleep(int cyc) {
 }
 
 void display_init(void) {
+		 /*
+	  This will set the peripheral bus clock to the same frequency
+	  as the sysclock. That means 80 MHz, when the microcontroller
+	  is running at 80 MHz. Changed 2017, as recommended by Axel.
+	*/
+	SYSKEY = 0xAA996655;  /* Unlock OSCCON, step 1 */
+	SYSKEY = 0x556699AA;  /* Unlock OSCCON, step 2 */
+	while(OSCCON & (1 << 21)); /* Wait until PBDIV ready */
+	OSCCONCLR = 0x180000; /* clear PBDIV bit <0,1> */
+	while(OSCCON & (1 << 21));  /* Wait until PBDIV ready */
+	SYSKEY = 0x0;  /* Lock OSCCON */
+	
+	/* Set up output pins */
+	AD1PCFG = 0xFFFF;
+	ODCE = 0x0;
+	TRISECLR = 0xFF;
+	PORTE = 0x0;
+	
+	/* Output pins for display signals */
+	PORTF = 0xFFFF;
+	PORTG = (1 << 9);
+	ODCF = 0x0;
+	ODCG = 0x0;
+	TRISFCLR = 0x70;
+	TRISGCLR = 0x200;
+	
+	/* Set up input pins */
+	TRISDSET = (1 << 8);
+	TRISFSET = (1 << 1);
+	
+	/* Set up SPI as master */
+	SPI2CON = 0;
+	SPI2BRG = 4;
+	/* SPI2STAT bit SPIROV = 0; */
+	SPI2STATCLR = 0x40;
+	/* SPI2CON bit CKP = 1; */
+        SPI2CONSET = 0x40;
+	/* SPI2CON bit MSTEN = 1; */
+	SPI2CONSET = 0x20;
+	/* SPI2CON bit ON = 1; */
+	SPI2CONSET = 0x8000;
+
         DISPLAY_CHANGE_TO_COMMAND_MODE;
 	quicksleep(10);
 	DISPLAY_ACTIVATE_VDD;
@@ -80,6 +125,13 @@ void display_update(void) {
 	}
 }
 
+static void num32asc( char * s, int n ) 
+{
+  int i;
+  for( i = 28; i >= 0; i -= 4 )
+    *s++ = "0123456789ABCDEF"[ (n >> i) & 15 ];
+}
+
 void display_debug( volatile int * const addr )
 {
   display_string( 1, "Addr" );
@@ -104,6 +156,13 @@ void display_string(int line, char *s) {
 			textbuffer[line][i] = ' ';
 }
 
+uint8_t spi_send_recv(uint8_t data) {
+    while(!(SPI2STAT & 0x08));
+    SPI2BUF = data;
+    while(!(SPI2STAT & 1));
+    return SPI2BUF;
+}
+
 void display_image(int x, const uint8_t *data) {
 	int i, j;
 	
@@ -122,4 +181,6 @@ void display_image(int x, const uint8_t *data) {
 			spi_send_recv(~data[i*32 + j]);
 	}
 }
+
+
 

@@ -5,12 +5,14 @@
 
 
 int getbtns(void){
+
+/*
     int pressed_buttons = (PORTD >> 5) & 0x7;
     int btn_2 = getbtns() & 0x1;
     int btn_3 = (getbtns() >> 1) & 0x1;
     int btn_4 = (getbtns() >> 2) & 0x1;
 
-
+ 
     if(btn_4){
         int new_time = (mytime & 0x0fff) | (switch_value << 12);
         mytime = new_time; 
@@ -25,4 +27,6 @@ int getbtns(void){
         retutn (mytime & 0xff0f) | (switch_value << 4);
         mytime = new_time;  
     }
+    */
+    return 0;
 }

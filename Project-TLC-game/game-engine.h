@@ -30,6 +30,7 @@ void display_update(void);
 void display_debug( volatile int * const addr );
 
 extern const uint8_t const font[128*8];
+extern char textbuffer[4][16];
 
 void display_image(int x, const uint8_t *data);
 
