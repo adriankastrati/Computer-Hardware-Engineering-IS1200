@@ -1,8 +1,28 @@
 #include <stdint.h>
 #include <pic32mx.h>
 #include "game-engine.h"
-#include <stdlib.h>
+#include <stdbool.h>
 
+#define DISPLAY_CHANGE_TO_COMMAND_MODE (PORTFCLR = 0x10)
+#define DISPLAY_CHANGE_TO_DATA_MODE (PORTFSET = 0x10)
+
+#define DISPLAY_ACTIVATE_RESET (PORTGCLR = 0x200)
+#define DISPLAY_DO_NOT_RESET (PORTGSET = 0x200)
+
+#define DISPLAY_ACTIVATE_VDD (PORTFCLR = 0x40)
+#define DISPLAY_ACTIVATE_VBAT (PORTFCLR = 0x20)
+
+#define DISPLAY_TURN_OFF_VDD (PORTFSET = 0x40)
+#define DISPLAY_TURN_OFF_VBAT (PORTFSET = 0x20)
+
+/* quicksleep:
+   A simple function to create a small delay.
+   Very inefficient use of computing resources,
+   but very handy in some special cases. */
+void quicksleep(int cyc) {
+	int i;
+	for(i = cyc; i > 0; i--);
+}
 
 void display_init(void) {
         DISPLAY_CHANGE_TO_COMMAND_MODE;
