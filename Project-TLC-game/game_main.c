@@ -52,7 +52,7 @@ int main(){
 
 		}
 		
-		clear_screen();
+		//clear_screen();
 		display_update();		
 	}
 	return 0;

@@ -180,7 +180,7 @@ void display_image(int x, const uint8_t *data) {
 			spi_send_recv(~data[i*32 + j]);
 	}
 }
-int is_valid_pixel(int x, int y)
+int is_valid_pixel(int x, int y) //checks if pixel is on screen
 {
 	if(x >= 0 && x < SCREEN_WIDTH && y >= 0 && y < SCREEN_HEIGHT)
 		return 1;
@@ -193,11 +193,13 @@ uint8_t get_screen_strip(int x, int y){
 		return 0;
 	
 	int p;
-	uint8_t strip;
+	uint8_t strip = 0;
 
 	for(p = 0; p < 8; p++){
-		
+		strip |= screen[x][y+p];
 	}
+
+	return strip;
 }
 
 
@@ -217,7 +219,7 @@ void set_screen_strip(int x, int y, uint8_t byte){
 	}
 	
 }
-
+/*|
 void clear_screen() {
         int x, y;
 
@@ -229,5 +231,5 @@ void clear_screen() {
 			}
 		}
 }
-
+*/
 
