@@ -1,6 +1,7 @@
 #include <stdint.h>
 #include <pic32mx.h>
 #include "game-engine.h"
+#include "graphics.h"
 #include <stdbool.h>
 
 #define DISPLAY_CHANGE_TO_COMMAND_MODE (PORTFCLR = 0x10)
@@ -14,8 +15,6 @@
 
 #define DISPLAY_TURN_OFF_VDD (PORTFSET = 0x40)
 #define DISPLAY_TURN_OFF_VBAT (PORTFSET = 0x20)
-
-
 
 
 /* quicksleep:
@@ -181,6 +180,54 @@ void display_image(int x, const uint8_t *data) {
 			spi_send_recv(~data[i*32 + j]);
 	}
 }
+int is_valid_pixel(int x, int y)
+{
+	if(x >= 0 && x < SCREEN_WIDTH && y >= 0 && y < SCREEN_HEIGHT)
+		return 1;
 
+	return 0;
+}
+
+uint8_t get_screen_strip(int x, int y){
+	if(!is_valid_pixel)
+		return 0;
+	
+	int p;
+	uint8_t strip;
+
+	for(p = 0; p < 8; p++){
+		
+	}
+}
+
+
+void set_screen_strip(int x, int y, uint8_t byte){
+	if(!is_valid_pixel)
+		return;
+
+	int p, curY;
+
+	for(p = 0; p < 8; p++){
+		curY = y+p;
+
+		if(!is_valid_pixel(x, curY))
+			continue;
+
+		screen[x][curY] = (byte >> p) & 0x1;
+	}
+	
+}
+
+void clear_screen() {
+        int x, y;
+
+		for(x = 0; < SCREEN_WIDTH; x++)
+		{
+			for(y = 0; y < SCREEN_HEIGHT; y++)
+			{
+				screen[x][y] = 0;
+			}
+		}
+}
 
 

@@ -1,6 +1,7 @@
 #include <stdint.h>
 #include <pic32mx.h>
 #include "game-engine.h"
+#include "graphics.h"
 #include <stdbool.h>
 
 enum game_state{title_screen, main_menu, highscore_menu, in_game, defeat_screen};
@@ -22,16 +23,18 @@ int main(){
 	
 	while(1)
 	{
+		int rowArrow;
 		switch(state)
 		{
 			case title_screen:
-			int rowPointer = 0;
-			
+			rowArrow = 0;
+			display_image(40, arrow);
 			display_string(0, "   Main Menu");
 			display_string(1, "");
 			display_string(2, "Play");
 
 			display_string(3, "Highscores");
+
 			break;
 			
 			case main_menu:
@@ -49,7 +52,7 @@ int main(){
 
 		}
 		
-		
+		clear_screen();
 		display_update();		
 	}
 	return 0;
