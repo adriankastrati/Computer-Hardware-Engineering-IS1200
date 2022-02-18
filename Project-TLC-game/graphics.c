@@ -5,7 +5,7 @@
 #include <stdbool.h>
 
 
-extern int screen[SCREEN_WIDTH][SCREEN_HEIGHT];
+uint8_t screen[SCREEN_WIDTH][SCREEN_HEIGHT];
 
 void invert_pixels();
 

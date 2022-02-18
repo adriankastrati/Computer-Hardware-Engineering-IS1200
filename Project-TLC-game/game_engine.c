@@ -219,11 +219,11 @@ void set_screen_strip(int x, int y, uint8_t byte){
 	}
 	
 }
-/*|
+
 void clear_screen() {
         int x, y;
 
-		for(x = 0; < SCREEN_WIDTH; x++)
+		for(x = 0; x < SCREEN_WIDTH; x++)
 		{
 			for(y = 0; y < SCREEN_HEIGHT; y++)
 			{
@@ -231,5 +231,5 @@ void clear_screen() {
 			}
 		}
 }
-*/
+
 

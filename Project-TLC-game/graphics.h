@@ -4,7 +4,7 @@
 #define STRIP_COUNT (SCREEN_WIDTH*SCREEN_HEIGHT/PIXEL_STRIP_LENGTH)
 
 //pixel values
-extern int screen[128][32];
+uint8_t screen[128][32];
 
 const uint8_t const arrow[];
 const uint8_t const good_car[];
