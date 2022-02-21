@@ -5,7 +5,7 @@
 #include <stdbool.h>
 
 enum game_state{title_screen, main_menu, highscore_menu, in_game, defeat_screen};
-enum game_state state = title_screen;
+enum game_state state = highscore_menu;
 
 int main(){
 
@@ -41,6 +41,10 @@ int main(){
 			break;
 
 			case highscore_menu:
+
+			display_string(0, "		Highscores		");
+			
+
 			break;
 
 			case in_game:

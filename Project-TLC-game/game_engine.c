@@ -232,4 +232,9 @@ void clear_screen() {
 		}
 }
 
+/* save highscore, go through flashmemory until find points that are more 
+   than current parameter, save name aswell
+*/
+void save_highscore(char* name, int points){
 
+}
