@@ -180,6 +180,25 @@ void display_image(int x, const uint8_t *data) {
 			spi_send_recv(~data[i*32 + j]);
 	}
 }
+
+void image_render(int x, const uint8_t *data) {
+	int i, x;
+	
+	for(i = 0; i < 4; i++) { // number of rows 
+		DISPLAY_CHANGE_TO_COMMAND_MODE;
+
+		spi_send_recv(0x22);
+		spi_send_recv(i);
+		
+		spi_send_recv(x & 0xF);
+		spi_send_recv(0x10 | ((x >> 4) & 0xF));
+		
+		DISPLAY_CHANGE_TO_DATA_MODE;
+		
+		for(x = 0; x < SCREEN_WIDTH; x++)
+			spi_send_recv(get_screen_strip(x, i*8));
+	}
+}
 int is_valid_pixel(int x, int y) //checks if pixel is on screen
 {
 	if(x >= 0 && x < SCREEN_WIDTH && y >= 0 && y < SCREEN_HEIGHT)
@@ -192,7 +211,7 @@ uint8_t get_screen_strip(int x, int y){
 	if(!is_valid_pixel)
 		return 0;
 	
-	int p;
+	uint8_t p;
 	uint8_t strip = 0;
 
 	for(p = 0; p < 8; p++){
@@ -207,7 +226,7 @@ void set_screen_strip(int x, int y, uint8_t byte){
 	if(!is_valid_pixel)
 		return;
 
-	int p, curY;
+	uint8_t p, curY;
 
 	for(p = 0; p < 8; p++){
 		curY = y+p;
@@ -218,6 +237,23 @@ void set_screen_strip(int x, int y, uint8_t byte){
 		screen[x][curY] = (byte >> p) & 0x1;
 	}
 	
+}
+void screen_display_texture(int y, int x, uint8_t height, uint8_t width, uint8_t *texture){
+    uint8_t i, j, curY, curX;
+    uint8_t p;
+    for(i = 0; i < height; i++){
+        for(j = 0; j < width; j++){
+
+            curY = y+i; 
+			curX = x+j;
+
+            if(!is_on_screen(curX, curY)) continue;
+
+            p = *(texture + i*width +j);
+            if(p == 2) continue;
+            screen[curY][curX] = p;
+        }
+    }
 }
 
 void clear_screen() {

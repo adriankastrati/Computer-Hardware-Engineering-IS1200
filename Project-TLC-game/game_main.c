@@ -28,7 +28,7 @@ int main(){
 		{
 			case title_screen:
 			rowArrow = 0;
-			display_image(40, arrow);
+			image_render(40, arrow);
 			display_string(0, "   Main POop");
 			display_string(1, "");
 			display_string(2, "Play");
@@ -56,8 +56,8 @@ int main(){
 
 		}
 		
-		//clear_screen();
-		display_update();		
+		clear_screen();
+		screen_render();		
 	}
 	return 0;
 }
