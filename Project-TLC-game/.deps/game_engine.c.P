@@ -1,12 +1,8 @@
-game_engine.c.o: game_engine.c \
- /Applications/mcb32tools.app/Contents/Resources/Toolchain/include/stdint.h \
- /Applications/mcb32tools.app/Contents/Resources/Toolchain/lib/gcc/mipsel-mcb32-elf/4.9.2/include/stdint-gcc.h \
- /Applications/mcb32tools.app/Contents/Resources/Toolchain/include/pic32mx.h \
- game-engine.h graphics.h \
- /Applications/mcb32tools.app/Contents/Resources/Toolchain/lib/gcc/mipsel-mcb32-elf/4.9.2/include/stdbool.h
-game_engine.c :
- /Applications/mcb32tools.app/Contents/Resources/Toolchain/include/stdint.h :
- /Applications/mcb32tools.app/Contents/Resources/Toolchain/lib/gcc/mipsel-mcb32-elf/4.9.2/include/stdint-gcc.h :
- /Applications/mcb32tools.app/Contents/Resources/Toolchain/include/pic32mx.h :
- game-engine.h graphics.h :
- /Applications/mcb32tools.app/Contents/Resources/Toolchain/lib/gcc/mipsel-mcb32-elf/4.9.2/include/stdbool.h :
+game_engine.c.o: game_engine.c /opt/mcb32tools/include/stdint.h \
+ /opt/mcb32tools/lib/gcc/mipsel-mcb32-elf/4.9.2/include/stdint-gcc.h \
+ /opt/mcb32tools/include/pic32mx.h game-engine.h graphics.h \
+ /opt/mcb32tools/lib/gcc/mipsel-mcb32-elf/4.9.2/include/stdbool.h
+game_engine.c /opt/mcb32tools/include/stdint.h :
+ /opt/mcb32tools/lib/gcc/mipsel-mcb32-elf/4.9.2/include/stdint-gcc.h :
+ /opt/mcb32tools/include/pic32mx.h game-engine.h graphics.h :
+ /opt/mcb32tools/lib/gcc/mipsel-mcb32-elf/4.9.2/include/stdbool.h :
