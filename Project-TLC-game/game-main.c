@@ -4,7 +4,10 @@
 #include <stdbool.h>
 
 enum game_state{title_screen, main_menu, highscore_menu, in_game, defeat_screen};
-enum game_state state = highscore_menu;
+enum game_state state = title_screen;
+int init = 0;
+
+void switch_state();
 
 int main(){
 
@@ -20,8 +23,10 @@ int main(){
 
 	delay(1000);
 
-	int rowArrow = 2;
+	int rowArrow = 1;
 	int pressed = 0;
+
+	int score = 0;
 	
 	while(1)
 	{
@@ -32,30 +37,39 @@ int main(){
 			
 			switch(rowArrow)
 			{
-				case 2:
-					display_image(40, arrow3);
+				case 1:
+					display_image(25, arrow3);
 					break;
-				case 3:
-					display_image(40, arrow4);
+				case 2:
+					display_image(50, arrow4);
 					break;
 
 			}
 			
-			display_string(0, "   Main Menu");
-			display_string(1, "");
-			display_string(2, "Play");
-			display_string(3, "Highscores");
+			display_string(0, "    Main Menu");
+			display_string(1, "Play");
+			display_string(2, "Hiscores");
+			display_string(3, "");
 
-			if((button1_is_down() || button2_is_down()) && !pressed)
+			if((btn_left() || btn_right()) && !pressed)
 			{
 				pressed = true;
 				rowArrow++;
 			}
-			else if(!(button1_is_down() || button2_is_down()))
+			else if(btn_p())
+			{
+				if(rowArrow == 2)
+					switch_state(in_game);
+				else
+					switch_state(highscore_menu);
+
+			}
+			else if(!(btn_left() || btn_right() || btn_p()))
 				pressed = false;
 
-			if(rowArrow > 3)
-				rowArrow = 2;
+			if(rowArrow > 2)
+				rowArrow = 1;
+
 
 			break;
 			
@@ -65,11 +79,27 @@ int main(){
 			case highscore_menu:
 
 			display_string(0, "		Highscores		");
+			if(init)
+			{
+				init = 0;
+				display_string(1, "");
+				display_string(2, "");
+				display_string(3, "");
+			}
 			
 
 			break;
 
 			case in_game:
+			if(init)
+			{
+				init = 0;
+				score = 0;
+				display_string(0, ("SCORE: %d", score));
+				display_string(1, "");
+				display_string(2, "");
+				display_string(3, "");
+			}
 			break;
 
 			case defeat_screen:
@@ -82,5 +112,10 @@ int main(){
 		display_update();		
 	}
 	return 0;
+}
+void switch_state(enum game_state st)
+{
+	state == st;
+	init = 1;
 }
 
