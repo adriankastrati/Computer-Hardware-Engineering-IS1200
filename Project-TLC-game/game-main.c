@@ -30,6 +30,8 @@ int main(){
 	
 	while(1)
 	{
+		if(btns_released() && pressed)
+			pressed = false;
 		
 		switch(state)
 		{
@@ -56,16 +58,17 @@ int main(){
 				pressed = true;
 				rowArrow++;
 			}
-			else if(btn_p())
+			else if(btn_p() && !pressed)
 			{
-				if(rowArrow == 2)
+				pressed = true;
+
+				if(rowArrow == 1)
 					switch_state(in_game);
 				else
 					switch_state(highscore_menu);
 
 			}
-			else if(!(btn_left() || btn_right() || btn_p()))
-				pressed = false;
+			
 
 			if(rowArrow > 2)
 				rowArrow = 1;
@@ -82,9 +85,15 @@ int main(){
 			if(init)
 			{
 				init = 0;
+				display_string(0, "		Highscores		");
 				display_string(1, "");
 				display_string(2, "");
 				display_string(3, "");
+			}
+			if(btn_p()&&!pressed)
+			{
+				pressed = true;
+				switch_state(title_screen);
 			}
 			
 
@@ -95,10 +104,16 @@ int main(){
 			{
 				init = 0;
 				score = 0;
-				display_string(0, ("SCORE: %d", score));
+				display_string(0, "SCORE: ");
 				display_string(1, "");
 				display_string(2, "");
 				display_string(3, "");
+			}
+
+			if(btn_p()&&!pressed)
+			{
+				pressed = true;
+				switch_state(title_screen);
 			}
 			break;
 
@@ -115,7 +130,7 @@ int main(){
 }
 void switch_state(enum game_state st)
 {
-	state == st;
+	state = st;
 	init = 1;
 }
 

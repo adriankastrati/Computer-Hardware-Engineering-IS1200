@@ -56,3 +56,6 @@ char btn_p(){
 }
 
 
+char btns_released(){
+    return !(btn_left() || btn_right() || btn_right());
+}
