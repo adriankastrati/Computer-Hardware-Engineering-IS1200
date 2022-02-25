@@ -59,5 +59,5 @@ char btn_left(){
 
 
 char btns_released(){
-    return !(btn_left() || btn_right() || btn_right());
+    return (btn_left() == 0 && btn_right() == 0 && btn_right() == 0);
 }
