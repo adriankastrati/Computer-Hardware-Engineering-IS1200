@@ -33,19 +33,12 @@ char btn_p(){
         return 0;
 }*/
 
-char btn_left(){
+char btn_right(){
     if (getbtns() & 0x1)
         return 1;
     else
         return 0;
   
-}
-
-char btn_right(){
-    if((getbtns() >> 2) & 0x1)
-        return 1;
-    else
-        return 0;
 }
 
 char btn_p(){
@@ -54,6 +47,15 @@ char btn_p(){
     else
         return 0;
 }
+
+char btn_left(){
+    if((getbtns() >> 2) & 0x1)
+        return 1;
+    else
+        return 0;
+}
+
+
 
 
 char btns_released(){
