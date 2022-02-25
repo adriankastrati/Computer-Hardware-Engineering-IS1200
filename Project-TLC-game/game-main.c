@@ -1,33 +1,63 @@
-/* mipslabmain.c
+#include <stdint.h>
+#include <pic32mx.h>
+#include "game-engine.h"
+#include "graphics.h"
+#include <stdbool.h>
 
-   This file written 2015 by Axel Isaksson,
-   modified 2015, 2017 by F Lundevall
+enum game_state{title_screen, main_menu, highscore_menu, in_game, defeat_screen};
+enum game_state state = highscore_menu;
 
-   Latest update 2017-04-21 by F Lundevall
+int main(){
 
-   For copyright and licensing, see file COPYING */
-
-#include <stdint.h>   /* Declarations of uint_32 and the like */
-#include <pic32mx.h>  /* Declarations of system-specific addresses etc */
-#include "mipslab.h"  /* Declatations for these labs */
-
-int main(void) {
+	//if (state == title_screen){}
 
 	
 	display_init();
-	display_string(0, "KTH/ICT lab");
-	display_string(1, "in Computer");
-	display_string(2, "Engineering");
-	display_string(3, "Welcome!");
+	display_string(0, "Generic Racing");
+	display_string(1, "IS1200");
+	display_string(2, "Deni P");
+	display_string(3, "Adrian K");
 	display_update();
-	
-	display_image(40, icon);
-	
-	labinit(); /* Do any lab-specific initialization */
 
-	while( 1 )
+	delay(1000);
+	
+	while(1)
 	{
-	  //nop labwork(); /* Do lab-specific things again and again */
+		int rowArrow;
+		switch(state)
+		{
+			case title_screen:
+			rowArrow = 0;
+			display_image(40, arrow);
+			display_string(0, "   Main POop");
+			display_string(1, "");
+			display_string(2, "Play");
+
+			display_string(3, "Highscores");
+
+			break;
+			
+			case main_menu:
+			break;
+
+			case highscore_menu:
+
+			display_string(0, "		Highscores		");
+			
+
+			break;
+
+			case in_game:
+			break;
+
+			case defeat_screen:
+			break;
+
+
+		}
+		
+		//clear_screen();
+		display_update();		
 	}
 	return 0;
 }
