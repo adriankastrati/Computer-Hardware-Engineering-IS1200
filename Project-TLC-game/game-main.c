@@ -46,12 +46,12 @@ int main(){
 			display_string(2, "Play");
 			display_string(3, "Highscores");
 
-			if(button_isDown() && !pressed)
+			if((button1_is_down() || button2_is_down()) && !pressed)
 			{
 				pressed = true;
 				rowArrow++;
 			}
-			else if(!button_isDown())
+			else if(!(button1_is_down() || button2_is_down()))
 				pressed = false;
 
 			if(rowArrow > 3)
