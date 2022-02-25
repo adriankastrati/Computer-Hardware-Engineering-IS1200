@@ -4,7 +4,9 @@
 
 
 void init_io(void){
-    TRISDSET = 0x70;
+   // TRISDSET = 0x70;
+    TRISD |= 0xfe0;
+
 }
 
 int getbtns(void){
