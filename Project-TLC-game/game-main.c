@@ -1,6 +1,5 @@
 #include <stdint.h>
 #include <pic32mx.h>
-#include "game-engine.h"
 #include "graphics.h"
 #include <stdbool.h>
 
@@ -28,7 +27,7 @@ int main(){
 		{
 			case title_screen:
 			rowArrow = 0;
-			display_image(40, arrow);
+			//display_image(40, arrow);
 			display_string(0, "   Main POop");
 			display_string(1, "");
 			display_string(2, "Play");
