@@ -3,7 +3,7 @@
  * This copyright notice added 2015 by F Lundevall
 
  * For copyright and licensing, see file COPYING */
-
+ 
 /* Non-Maskable Interrupt; something bad likely happened, so hang */
 void _nmi_handler() {
 	for(;;);

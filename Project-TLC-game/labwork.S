@@ -5,7 +5,7 @@
   # Please add your own code at the end of the file.
 
   #
-  # Please keep the two macros PUSH and POP unchanged
+   # Please keep the two macros PUSH and POP unchanged
   #
 .macro	PUSH reg
 	addi	$sp,$sp,-4

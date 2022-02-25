@@ -3,7 +3,7 @@ struct score{
     int points;
     char position; 
 };
-
+ 
 #define MAX_SCORES 32
 
 struct score score_list[MAX_SCORES];

@@ -1,4 +1,4 @@
-/* mipslab.h/Users/adrian/laborationer/Lab.1/time4mips/mipslabdata.c
+ /* mipslab.h/Users/adrian/laborationer/Lab.1/time4mips/mipslabdata.c
    Header file for all labs.
    This file written 2015 by F Lundevall
    Some parts are original code written by Axel Isaksson

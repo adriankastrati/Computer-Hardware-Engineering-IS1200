@@ -7,7 +7,7 @@
 	lui \reg, %hi(\val)
 	ori \reg, \reg, %lo(\val)
 .endm
-
+ 
 .macro STUB num
 	.align 4
 	.section .vector_new_\num,"ax",@progbits
