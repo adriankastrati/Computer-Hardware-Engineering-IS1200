@@ -89,6 +89,7 @@ int main(){
 				display_string(1, "");
 				display_string(2, "");
 				display_string(3, "");
+				delay(500);
 			}
 			if(btn_p()&&!pressed)
 			{
@@ -108,6 +109,7 @@ int main(){
 				display_string(1, "");
 				display_string(2, "");
 				display_string(3, "");
+				delay(500);
 			}
 
 			if(btn_p()&&!pressed)
