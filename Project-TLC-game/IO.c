@@ -5,7 +5,7 @@
 
 void init_io(void){
    // TRISDSET = 0x70;
-    TRISD |= 0xfe0;
+    TRISD |= 0x70;
 
 }
 
