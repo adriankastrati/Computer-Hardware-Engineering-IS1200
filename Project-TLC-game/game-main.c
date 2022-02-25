@@ -12,27 +12,31 @@ int main(){
 
 	
 	display_init();
-	display_string(0, "Generic Racing");
+	display_string(0, "Dino Run");
 	display_string(1, "IS1200");
 	display_string(2, "Deni P");
 	display_string(3, "Adrian K");
 	display_update();
 
 	delay(1000);
+
+	int rowArrow = 2;
 	
 	while(1)
 	{
-		int rowArrow;
+		
 		switch(state)
 		{
 			case title_screen:
-			rowArrow = 0;
+			
 			display_image(40, arrow);
-			display_string(0, "   Main POop");
+			display_string(0, "   Main Menu");
 			display_string(1, "");
 			display_string(2, "Play");
-
 			display_string(3, "Highscores");
+
+			if(rowArrow > 3)
+				rowArrow = 2;
 
 			break;
 			
