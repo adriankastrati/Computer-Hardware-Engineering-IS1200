@@ -21,6 +21,7 @@ int main(){
 	delay(1000);
 
 	int rowArrow = 2;
+	int pressed = 0;
 	
 	while(1)
 	{
@@ -29,11 +30,29 @@ int main(){
 		{
 			case title_screen:
 			
-			display_image(40, arrow);
+			switch(rowArrow)
+			{
+				case 2:
+					display_image(40, arrow3);
+					break;
+				case 3:
+					display_image(40, arrow4);
+					break;
+
+			}
+			
 			display_string(0, "   Main Menu");
 			display_string(1, "");
 			display_string(2, "Play");
 			display_string(3, "Highscores");
+
+			if(button_isDown() && !pressed)
+			{
+				pressed = true;
+				rowArrow++;
+			}
+			else if(!button_isDown())
+				pressed = false;
 
 			if(rowArrow > 3)
 				rowArrow = 2;
