@@ -6,19 +6,49 @@
 enum game_state{title_screen, main_menu, highscore_menu, in_game, defeat_screen};
 enum game_state state = highscore_menu;
 
+void init_io(void){
+    //initiate buttons to input
+    TRISDSET = 0x7 << 5;
+}
+
+int getbtns(void){
+    return (PORTD >> 4) & 0xE;
+}
+
+bool btn_right(){
+    if((PORTD >> 5) & 0x1) return true;
+
+    else return false;
+}
+
+bool btn_up(){
+    if((PORTD >> 6) & 0x1) return true;
+
+    else return false;
+}
+
+bool btn_left(){
+    if((PORTD >> 7) & 0x1) return true;
+
+    else return false;
+}
 int main(){
 
 	//if (state == title_screen){}
 
-	
+	while(1){
 	display_init();
-	display_string(0, "Generic Racing");
-	display_string(1, "IS1200");
-	display_string(2, "Deni P");
-	display_string(3, "Adrian K");
-	display_update();
+	
+	if(btn_right) display_string(0, "Generic Racing");
+	
+	if(btn_left)display_string(1, "IS1200");
+	
+	if(btn_up)display_string(2, "Deni P");
 
+	display_update();
 	delay(1000);
+
+	}
 	
 	while(1)
 	{
