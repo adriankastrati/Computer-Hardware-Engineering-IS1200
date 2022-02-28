@@ -110,13 +110,10 @@ int main(){
 				display_string(3, "");
 				delay(500);
 			}
-			display_string(1, "");
-			display_string(2, "");
-			display_string(3, "");
 			display_image(0, ground);
-			//display_image(32, ground);
+			display_image(32, ground);
 			display_image(32*2, ground);
-			//Sdisplay_image(32*3, ground);
+			Sdisplay_image(32*3, ground);
 			display_image(10, dino1);
 
 			if(btn_p()&&!pressed)
