@@ -1,4 +1,4 @@
-void init_timer(){
+/*void init_timer(){
     //stops timer 
     T2CONCLR = 1 << 15;
 
@@ -20,3 +20,4 @@ void init_timer(){
 
     IFSCLR(2) = 0x4;
 }
+*/

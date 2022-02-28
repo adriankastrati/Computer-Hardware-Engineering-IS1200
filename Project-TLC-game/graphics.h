@@ -1,4 +1,4 @@
- /* mipslab.h
+* mipslab.h
    Header file for all labs.
    This file written 2015 by F Lundevall
    Some parts are original code written by Axel Isaksson
@@ -51,6 +51,9 @@ extern const uint8_t const arrow1[128];
 extern const uint8_t const arrow2[128];
 extern const uint8_t const arrow3[128];
 extern const uint8_t const arrow4[128];
+extern const uint8_t const ground[128];
+
+
 
 /* Written as part of asm lab: delay, time2string */
 void delay(int);
@@ -69,10 +72,9 @@ char btn_left();
 void enable_interrupt(void);
 
 //score.h
+extern struct score score_list[MAX_SCORES];
 char *pos_name_score();
 void init_highscore_list();
 void delete_score_list();
 void update_list();
 void show_score();
-
-

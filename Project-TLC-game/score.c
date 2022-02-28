@@ -1,3 +1,4 @@
+
 #include <stdint.h>   /* Declarations of uint_32 and the like */
 #include <pic32mx.h>  /* Declarations of system-specific addresses etc */
 #include "graphics.h"
@@ -24,7 +25,6 @@ void init_highscore_list(){
         score_list[i].points = 0;
         score_list[i].position = i;
     }
-
 }
 
 void delete_score_list(){
@@ -110,7 +110,6 @@ char *pos_name_score(struct score ig){
 
     return &char_arr[0];
 }*/
-
 char *pos_name_score(struct score ig){
     int temp = ig.points;
     int digits = 0;
@@ -145,6 +144,8 @@ char *pos_name_score(struct score ig){
         ret_arr[digits + 6 - loop1] = temp % 10 + '0';
         temp /= 10;
     }
+
+    ret_arr[digits + 6] = 0;
     
 
     return &ret_arr;
