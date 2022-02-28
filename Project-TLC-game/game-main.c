@@ -112,6 +112,8 @@ int main(){
 				delay(500);
 			}
 
+			display_image(10, dino1);
+
 			if(btn_p()&&!pressed)
 			{
 				pressed = true;
