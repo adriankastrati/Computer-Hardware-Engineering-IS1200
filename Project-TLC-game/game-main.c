@@ -8,33 +8,7 @@ enum game_state state = title_screen;
 int init = 0;
 
 void switch_state();
-
-void init_io(void){
-    //initiate buttons to input
-    TRISDSET = 0x7 << 5;
-}
-
-int getbtns(void){
-    return (PORTD >> 4) & 0xE;
-}
-
-bool btn_right(){
-    if((PORTD >> 5) & 0x1) return true;
-
-    else return false;
-}
-
-bool btn_up(){
-    if((PORTD >> 6) & 0x1) return true;
-
-    else return false;
-}
-
-bool btn_left(){
-    if((PORTD >> 7) & 0x1) return true;
-
-    else return false;
-}
+/*
 int main(){
 
 	//if (state == title_screen){}
@@ -46,14 +20,14 @@ int main(){
 	display_string(2, "Deni P");
 	display_string(3, "Adrian K");
 	display_update();
+ 	init_highscore_list();
 
 	display_update();
 	delay(1000);
 
 	int rowArrow = 1;
 	int pressed = 0;
-
-	int score = 0;
+	int view_score = 0;
 	
 	while(1)
 	{
@@ -112,9 +86,10 @@ int main(){
 			{
 				init = 0;
 				display_string(0, "		Highscores		");
-				display_string(1, "");
-				display_string(2, "");
-				display_string(3, "");
+				print_score(score_list[view_score], 1);
+                print_score(score_list[view_score + 1], 2);
+                print_score(score_list[view_score + 2], 3);
+
 				delay(500);
 			}
 			if(btn_p()&&!pressed)
@@ -130,7 +105,6 @@ int main(){
 			if(init)
 			{
 				init = 0;
-				score = 0;
 				display_string(0, "SCORE: ");
 				display_string(1, "");
 				display_string(2, "");

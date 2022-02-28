@@ -33,8 +33,8 @@ hexasc:
 	beq $t1, 1, skip # jump to skip if true, else
 	nop
 	addi $v0, $v0, 0x7 #  add 0x7 for A
-	
-	skip: 
+
+	skip:
 
   	jr $ra #jump back to where linked
   	nop
@@ -66,9 +66,7 @@ delay:
 	nop
 time2string:
 	PUSH $ra
-	
-	PUSH $a0
-	
+	PUSH $a0	
 
 	#$a0 contains adress for 
 	#$a1 contains NBDC string
@@ -110,35 +108,12 @@ time2string:
 	PUSH $a1
 	jal hexasc
 	nop
+
 	POP $a1
-	
-	andi $t1, $v0, 1
-	beq $t1, $0, skip1
-	
 	POP $a0
 	sb $v0, 4($a0) # saves last digit
-	
-	addi $t0, $0, 68
-	
-	sb $t0, 5($a0) # saves D(68)
-		
-	
-	sb $0, 6($a0) # saves null
-	
-	POP $ra
-	nop
-	jr $ra
-	nop
-
-skip1:
-	addi $t0, $0, 69
-
-	POP $a0
-	sb $v0, 4($a0) # saves last digit
-		
-	sb $t0, 5($a0) # saves E(69)
-	
-	sb $0, 6($a0) # saves null
+			
+	sb $0, 5($a0) # saves null
 	
 	POP $ra
 	nop

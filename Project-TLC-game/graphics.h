@@ -1,4 +1,7 @@
- /* mipslab.h/Users/adrian/laborationer/Lab.1/time4mips/mipslabdata.c
+#ifndef GRAPHICS
+#define GRAPHICS
+
+/* mipslab.h
    Header file for all labs.
    This file written 2015 by F Lundevall
    Some parts are original code written by Axel Isaksson
@@ -11,11 +14,12 @@
 void display_image(int x, const uint8_t *data);
 void display_init(void);
 void display_string(int line, char *s);
+
 void display_update(void);
 uint8_t spi_send_recv(uint8_t data);
 
 /* Declare lab-related functions from mipslabfunc.c */
-char * itoaconv( int num );
+char *itoaconv( int num );
 void labwork(void);
 void quicksleep(int cyc);
 void tick( unsigned int * timep );
@@ -52,14 +56,41 @@ extern const uint8_t const arrow2[128];
 extern const uint8_t const arrow3[128];
 extern const uint8_t const arrow4[128];
 extern uint8_t dino1[128];
+extern const uint8_t const ground[128];
+
+
 
 extern const uint8_t const ground[128];
 /* Written as part of asm lab: delay, time2string */
 void delay(int);
 void time2string( char *, int );
 /* Written as part of i/o lab: getbtns, getsw, enable_interrupt */
+
+//io.h
 int getbtns(void);
 int getsw(void);
+
+char btn_right();
+char btn_p();
+char btn_left();
+
+//interrupts
 void enable_interrupt(void);
 
-//
+//score.h
+typedef struct Score{
+    char name[3];
+    int points;
+    char position; 
+
+} Score;
+
+extern struct Score score_list[32];
+
+char print_score();
+void init_highscore_list();
+void delete_score_list();
+void update_list();
+void show_score();
+
+#endif
