@@ -113,7 +113,7 @@ int main(){
 			display_image(0, ground);
 			display_image(32, ground);
 			display_image(32*2, ground);
-			Sdisplay_image(32*3, ground);
+			display_image(32*3, ground);
 			display_image(10, dino1);
 
 			if(btn_p()&&!pressed)
