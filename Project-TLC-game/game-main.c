@@ -8,7 +8,7 @@ enum game_state state = title_screen;
 int init = 0;
 
 void switch_state();
-
+/*
 int main(){
 
 	//if (state == title_screen){}
@@ -85,9 +85,9 @@ int main(){
 			{
 				init = 0;
 				display_string(0, "		Highscores		");
-				dosom(score_list[view_score], 1);
-                dosom(score_list[view_score + 1], 2);
-                dosom(score_list[view_score + 2], 3);
+				print_score(score_list[view_score], 1);
+                print_score(score_list[view_score + 1], 2);
+                print_score(score_list[view_score + 2], 3);
 
 				delay(500);
 			}
@@ -141,4 +141,4 @@ void switch_state(enum game_state st)
 {
 	state = st;
 	init = 1;
-}
+}*/

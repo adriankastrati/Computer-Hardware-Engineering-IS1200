@@ -84,7 +84,7 @@ typedef struct Score{
 
 extern struct Score score_list[32];
 
-char *pos_name_score();
+char print_score();
 void init_highscore_list();
 void delete_score_list();
 void update_list();
