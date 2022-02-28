@@ -46,10 +46,12 @@ extern char textbuffer[4][16];
    students must define their functions with the exact types
    specified in the laboratory instructions. */
 
+//texture
 extern const uint8_t const arrow1[128];
 extern const uint8_t const arrow2[128];
 extern const uint8_t const arrow3[128];
 extern const uint8_t const arrow4[128];
+extern const uint8_t const dino1[128];
 
 /* Written as part of asm lab: delay, time2string */
 void delay(int);
@@ -58,3 +60,5 @@ void time2string( char *, int );
 int getbtns(void);
 int getsw(void);
 void enable_interrupt(void);
+
+//
