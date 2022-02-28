@@ -111,9 +111,9 @@ int main(){
 				delay(500);
 			}
 			display_image(0, ground);
-			display_image(8, ground);
-			display_image(16, ground);
-			display_image(24, ground);
+			display_image(32, ground);
+			display_image(32*2, ground);
+			display_image(32*3, ground);
 			display_image(10, dino1);
 
 			if(btn_p()&&!pressed)
