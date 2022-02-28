@@ -8,7 +8,7 @@ void init_io(void){
 }
 
 int getbtns(void){
-    return (PORTD >> 4) & 0x7;
+    return (PORTD >> 5) & 0x7;
 }
 
 char btn_right(){

@@ -20,13 +20,13 @@ int main(){
 	display_string(2, "Deni P");
 	display_string(3, "Adrian K");
 	display_update();
+ 	init_highscore_list();
 
 	delay(1000);
 
 	int rowArrow = 1;
 	int pressed = 0;
-
-	int score = 0;
+	int view_score = 0;
 	
 	while(1)
 	{
@@ -73,7 +73,6 @@ int main(){
 			if(rowArrow > 2)
 				rowArrow = 1;
 
-
 			break;
 			
 			case main_menu:
@@ -86,9 +85,10 @@ int main(){
 			{
 				init = 0;
 				display_string(0, "		Highscores		");
-				display_string(1, "");
-				display_string(2, "");
-				display_string(3, "");
+				dosom(score_list[view_score], 1);
+                dosom(score_list[view_score + 1], 2);
+                dosom(score_list[view_score + 2], 3);
+
 				delay(500);
 			}
 			if(btn_p()&&!pressed)
@@ -104,13 +104,20 @@ int main(){
 			if(init)
 			{
 				init = 0;
-				score = 0;
 				display_string(0, "SCORE: ");
 				display_string(1, "");
 				display_string(2, "");
 				display_string(3, "");
 				delay(500);
 			}
+			display_string(1, "");
+			display_string(2, "");
+			display_string(3, "");
+			//display_image(0, ground);
+			//display_image(32, ground);
+			//display_image(32*2, ground);
+			//display_image(32*3, ground);
+			//display_image(10, dino1);
 
 			if(btn_p()&&!pressed)
 			{

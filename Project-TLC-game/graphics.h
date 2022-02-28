@@ -1,4 +1,7 @@
-* mipslab.h
+#ifndef GRAPHICS
+#define GRAPHICS
+
+/* mipslab.h
    Header file for all labs.
    This file written 2015 by F Lundevall
    Some parts are original code written by Axel Isaksson
@@ -72,9 +75,19 @@ char btn_left();
 void enable_interrupt(void);
 
 //score.h
-extern struct score score_list[MAX_SCORES];
+typedef struct Score{
+    char name[3];
+    int points;
+    char position; 
+
+} Score;
+
+extern struct Score score_list[32];
+
 char *pos_name_score();
 void init_highscore_list();
 void delete_score_list();
 void update_list();
 void show_score();
+
+#endif
