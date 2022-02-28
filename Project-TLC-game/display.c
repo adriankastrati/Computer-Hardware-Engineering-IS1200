@@ -183,6 +183,40 @@ void display_string(int line, char *s) {
 		} else
 			textbuffer[line][i] = ' ';
 }
+/*
+void integer_to_char_arr(int line, int integer){
+	int loop1;
+	int loop2 = 0;
+
+	int digits = 0;
+	int copy_integer = integer;
+
+	while(copy_integer){
+		copy_integer /= 10;
+		digits++;
+	}
+
+	char* temp_char_arr = (char*) malloc(sizeof(char) * digits):
+
+	char char_arr[digits];
+
+
+
+	for(loop1 = 0; integer != 0; loop1++){
+		//saves last digit in digit
+		*(temp_char_arr + loop1) = integer % 10 + '0';
+		
+		//truncates the integer
+		integer /= 10;
+		loop2++;
+	} 
+
+	//reverse order of array
+	for(loop1 = 0; loop1 > 0; loop1++){
+	char_arr[loop1] =  temp_char_arr[loop2 - loop1];
+	}
+
+}*/
 
 void display_image(int x, const uint8_t *data) {
 	int i, j;
@@ -226,6 +260,7 @@ void display_update(void) {
 		}
 	}
 }
+
 
 /* Helper function, local to this file.
    Converts a number to hexadecimal ASCII digits. */

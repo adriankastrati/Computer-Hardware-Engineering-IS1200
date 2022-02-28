@@ -135,4 +135,3 @@ void switch_state(enum game_state st)
 	state = st;
 	init = 1;
 }
-
