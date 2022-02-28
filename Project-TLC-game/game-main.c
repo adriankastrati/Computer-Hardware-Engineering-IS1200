@@ -66,7 +66,7 @@ int main(){
 					switch_state(in_game);
 				else
 					switch_state(highscore_menu);
-
+ 
 			}
 			
 
@@ -114,9 +114,9 @@ int main(){
 			display_string(2, "");
 			display_string(3, "");
 			display_image(0, ground);
-			display_image(32, ground);
+			//display_image(32, ground);
 			display_image(32*2, ground);
-			display_image(32*3, ground);
+			//Sdisplay_image(32*3, ground);
 			display_image(10, dino1);
 
 			if(btn_p()&&!pressed)
