@@ -1,13 +1,10 @@
-/* mipslabfunc.c
-   This file written 2015 by F Lundevall
-   Some parts are original code written by Axel Isaksson
 
-   For copyright and licensing, see file COPYING */
 
 #include <stdint.h>   /* Declarations of uint_32 and the like */
 #include <pic32mx.h>  /* Declarations of system-specific addresses etc */
 #include "graphics.h"  /* Declatations for these labs */ 
- 
+ #include <stdbool.h>
+
 /* Declare a helper function which is local to this file */
 static void num32asc( char * s, int ); 
 
@@ -22,71 +19,31 @@ static void num32asc( char * s, int );
 
 #define DISPLAY_TURN_OFF_VDD (PORTFSET = 0x40)
 #define DISPLAY_TURN_OFF_VBAT (PORTFSET = 0x20)
+#define DISPLAY_VDD PORTFbits.RF6
+#define DISPLAY_VBATT PORTFbits.RF5
+#define DISPLAY_COMMAND_DATA PORTFbits.RF4
+#define DISPLAY_RESET PORTGbits.RG9
+#define DISPLAY_VDD_PORT PORTF
+#define DISPLAY_VDD_MASK 0x40
+#define DISPLAY_VBATT_PORT PORTF
+#define DISPLAY_VBATT_MASK 0x20
+#define DISPLAY_COMMAND_DATA_PORT PORTF
+#define DISPLAY_COMMAND_DATA_MASK 0x10
+#define DISPLAY_RESET_PORT PORTG
+#define DISPLAY_RESET_MASK 0x200
 
-/* quicksleep:
-   A simple function to create a small delay.
-   Very inefficient use of computing resources,
-   but very handy in some special cases. */
+void welcome_screen(){
+	display_string(0, "Dino Run");
+	display_string(1, "IS1200");
+	display_string(2, "Deni P");
+	display_string(3, "Adrian K");
+	display_update();
+	delay(1000);
+}
+
 void quicksleep(int cyc) {
 	int i;
 	for(i = cyc; i > 0; i--);
-}
-
-/* tick:
-   Add 1 to time in memory, at location pointed to by parameter.
-   Time is stored as 4 pairs of 2 NBCD-digits.
-   1st pair (most significant byte) counts days.
-   2nd pair counts hours.
-   3rd pair counts minutes.
-   4th pair (least significant byte) counts seconds.
-   In most labs, only the 3rd and 4th pairs are used. */
-void tick( unsigned int * timep )
-{
-  /* Get current value, store locally */
-  register unsigned int t = * timep;
-  t += 1; /* Increment local copy */
-  
-  /* If result was not a valid BCD-coded time, adjust now */
-
-  if( (t & 0x0000000f) >= 0x0000000a ) t += 0x00000006;
-  if( (t & 0x000000f0) >= 0x00000060 ) t += 0x000000a0;
-  /* Seconds are now OK */
-
-  if( (t & 0x00000f00) >= 0x00000a00 ) t += 0x00000600;
-  if( (t & 0x0000f000) >= 0x00006000 ) t += 0x0000a000;
-  /* Minutes are now OK */
-
-  if( (t & 0x000f0000) >= 0x000a0000 ) t += 0x00060000;
-  if( (t & 0x00ff0000) >= 0x00240000 ) t += 0x00dc0000;
-  /* Hours are now OK */
-
-  if( (t & 0x0f000000) >= 0x0a000000 ) t += 0x06000000;
-  if( (t & 0xf0000000) >= 0xa0000000 ) t = 0;
-  /* Days are now OK */
-
-  * timep = t; /* Store new value */
-}
-
-/* display_debug
-   A function to help debugging.
-
-   After calling display_debug,
-   the two middle lines of the display show
-   an address and its current contents.
-
-   There's one parameter: the address to read and display.
-
-   Note: When you use this function, you should comment out any
-   repeated calls to display_image; display_image overwrites
-   about half of the digits shown by display_debug.
-*/   
-void display_debug( volatile int * const addr )
-{
-  display_string( 1, "Addr" );
-  display_string( 2, "Data" );
-  num32asc( &textbuffer[1][6], (int) addr );
-  num32asc( &textbuffer[2][6], *addr );
-  display_update();
 }
 
 uint8_t spi_send_recv(uint8_t data) {
@@ -97,11 +54,7 @@ uint8_t spi_send_recv(uint8_t data) {
 }
 
 void display_init(void) {
-	     /*
-	  This will set the peripheral bus clock to the same frequency
-	  as the sysclock. That means 80 MHz, when the microcontroller
-	  is running at 80 MHz. Changed 2017, as recommended by Axel.
-	*/
+	
 	SYSKEY = 0xAA996655;  /* Unlock OSCCON, step 1 */
 	SYSKEY = 0x556699AA;  /* Unlock OSCCON, step 2 */
 	while(OSCCON & (1 << 21)); /* Wait until PBDIV ready */
@@ -183,59 +136,6 @@ void display_string(int line, char *s) {
 		} else
 			textbuffer[line][i] = ' ';
 }
-/*
-void integer_to_char_arr(int line, int integer){
-	int loop1;
-	int loop2 = 0;
-
-	int digits = 0;
-	int copy_integer = integer;
-
-	while(copy_integer){
-		copy_integer /= 10;
-		digits++;
-	}
-
-	char* temp_char_arr = (char*) malloc(sizeof(char) * digits):
-
-	char char_arr[digits];
-
-
-
-	for(loop1 = 0; integer != 0; loop1++){
-		//saves last digit in digit
-		*(temp_char_arr + loop1) = integer % 10 + '0';
-		
-		//truncates the integer
-		integer /= 10;
-		loop2++;
-	} 
-
-	//reverse order of array
-	for(loop1 = 0; loop1 > 0; loop1++){
-	char_arr[loop1] =  temp_char_arr[loop2 - loop1];
-	}
-
-}*/
-
-void display_image(int x, const uint8_t *data) {
-	int i, j;
-	
-	for(i = 0; i < 4; i++) {
-		DISPLAY_CHANGE_TO_COMMAND_MODE;
-
-		spi_send_recv(0x22);
-		spi_send_recv(i);
-		
-		spi_send_recv(x & 0xF);
-		spi_send_recv(0x10 | ((x >> 4) & 0xF));
-		
-		DISPLAY_CHANGE_TO_DATA_MODE;
-		
-		for(j = 0; j < 32; j++)
-			spi_send_recv(~data[i*32 + j]);
-	}
-}
 
 void display_update(void) {
 	int i, j, k;
@@ -262,8 +162,6 @@ void display_update(void) {
 }
 
 
-/* Helper function, local to this file.
-   Converts a number to hexadecimal ASCII digits. */
 static void num32asc( char * s, int n ) 
 {
   int i;
@@ -271,52 +169,7 @@ static void num32asc( char * s, int n )
     *s++ = "0123456789ABCDEF"[ (n >> i) & 15 ];
 }
 
-/*
- * itoa
- * 
- * Simple conversion routine
- * Converts binary to decimal numbers
- * Returns pointer to (static) char array
- * 
- * The integer argument is converted to a string
- * of digits representing the integer in decimal format.
- * The integer is considered signed, and a minus-sign
- * precedes the string of digits if the number is
- * negative.
- * 
- * This routine will return a varying number of digits, from
- * one digit (for integers in the range 0 through 9) and up to
- * 10 digits and a leading minus-sign (for the largest negative
- * 32-bit integers).
- * 
- * If the integer has the special value
- * 100000...0 (that's 31 zeros), the number cannot be
- * negated. We check for this, and treat this as a special case.
- * If the integer has any other value, the sign is saved separately.
- * 
- * If the integer is negative, it is then converted to
- * its positive counterpart. We then use the positive
- * absolute value for conversion.
- * 
- * Conversion produces the least-significant digits first,
- * which is the reverse of the order in which we wish to
- * print the digits. We therefore store all digits in a buffer,
- * in ASCII form.
- * 
- * To avoid a separate step for reversing the contents of the buffer,
- * the buffer is initialized with an end-of-string marker at the
- * very end of the buffer. The digits produced by conversion are then
- * stored right-to-left in the buffer: starting with the position
- * immediately before the end-of-string marker and proceeding towards
- * the beginning of the buffer.
- * 
- * For this to work, the buffer size must of course be big enough
- * to hold the decimal representation of the largest possible integer,
- * and the minus sign, and the trailing end-of-string marker.
- * The value 24 for ITOA_BUFSIZ was selected to allow conversion of
- * 64-bit quantities; however, the size of an int on your current compiler
- * may not allow this straight away.
- */
+
 #define ITOA_BUFSIZ ( 24 )
 char * itoaconv( int num )
 {
@@ -350,4 +203,65 @@ char * itoaconv( int num )
   /* Since the loop always sets the index i to the next empty position,
    * we must add 1 in order to return a pointer to the first occupied position. */
   return( &itoa_buffer[ i + 1 ] );
+}
+
+
+
+bool get_pixel( Screen * screen, unsigned int x, unsigned int y){
+    return ((screen->pixels[x]) >> y) & 1;
+}
+
+void set_pixel(Screen * screen, unsigned int x, unsigned int y, bool value){
+    //clear bit
+    screen -> pixels[x] &= ~(1 << y);
+    //mask in value
+    screen -> pixels[x] |= value << y;
+}
+
+void display_screen(Screen *screen) {
+    int i, j, k;
+    for(i = 0; i < 4; i++) {
+        DISPLAY_COMMAND_DATA_PORT &= ~DISPLAY_COMMAND_DATA_MASK; //clear bit 1 of DISPLAY_COMMAND_DATA_PORT
+        spi_send_recv(0x22); //// (10.1.5 Set Page Address (22h))?
+        spi_send_recv(i);    //// Page adress???
+        
+        spi_send_recv(0x0); //// Page adress???
+        spi_send_recv(0x10); //// Page adress???
+        
+        DISPLAY_COMMAND_DATA_PORT |= DISPLAY_COMMAND_DATA_MASK; //set bit 1 of DISPLAY_COMMAND_DATA_PORT
+        // Send bytes
+        
+        for(j = 0; j < 128; j++) {
+            uint8_t data = screen->pixels[j] >> (i*8);
+
+            spi_send_recv(data);
+        }
+    }
+}
+
+void clear_screen(Screen *screen)
+{
+	int i;
+	for(i = 0; i < 128; i++){
+		screen -> pixels[i] = 0;
+	}
+}
+
+void texture2screen(Screen *screen, const uint8_t texture[], int width, int height, int x, int y)
+{
+	int i, j;
+
+	for(i = 0; i < height; i++)
+	{
+		for(j = 0; j < width; j++)
+		{
+			if(texture[i * 8 + j] && is_valid_pixel(x + j, y + i))
+				set_pixel(&screen, x + j, y + i, true);
+		}
+	}
+}
+
+bool is_valid_pixel(int x, int y){
+	return (x >= 0 && x < 128 && y >= 0 && y < 32);
+	
 }

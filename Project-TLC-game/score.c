@@ -1,9 +1,12 @@
+#include <pic32mx.h>  /* Declarations of system-specific addresses etc */
 #include <stdint.h>   // Declarations of uint_32 and the like // Declarations of system-specific addresses etc 
 #include <stdio.h>
 #include <math.h>
 #include <stdbool.h>
-#define MAX_SCORES 32
+#include "graphics.h"
 
+
+/*
 typedef struct Score{
     char name[3];
     int points;
@@ -12,6 +15,7 @@ typedef struct Score{
 } Score;
 
 struct Score score_list[32];
+*/
 
 Score create_Score(char* new_name, int points){
     int i;
@@ -81,7 +85,7 @@ void update_list(Score save_score){
     }
 }
 
-void print_score(Score ig, char line){    
+void print_score(Score ig, int line){    
     //position 2 elements, 2 spaces, name 3 elements, 2 spaces, max 4 digits digits, 1 null terminated
     char ret_arr[14];
     int loop1;
@@ -120,5 +124,5 @@ void print_score(Score ig, char line){
     
     for(loop1 = 0; loop1 < 13; loop1++)
 
-    display_string(ret_arr, line);
+    display_string(line, ret_arr);
 }

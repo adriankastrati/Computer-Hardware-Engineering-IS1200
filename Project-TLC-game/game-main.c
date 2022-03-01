@@ -1,144 +1,93 @@
-#include <stdint.h>
-#include <pic32mx.h>
-#include "graphics.h"
+#include <pic32mx.h>  /* Declarations of system-specific addresses etc */
+#include <stdint.h>   // Declarations of uint_32 and the like // Declarations of system-specific addresses etc 
+#include <stdio.h>
+#include <math.h>
 #include <stdbool.h>
+#include "graphics.h"
 
-enum game_state{title_screen, main_menu, highscore_menu, in_game, defeat_screen};
-enum game_state state = title_screen;
+enum game_state{main_menu, highscore_menu, in_game, defeat_screen};
+enum game_state state = in_game;
 int init = 0;
 
 void switch_state();
-/*
+
 int main(){
 
 	//if (state == title_screen){}
 
-	while(1){
 	display_init();
-	display_string(0, "Dino Run");
-	display_string(1, "IS1200");
-	display_string(2, "Deni P");
-	display_string(3, "Adrian K");
-	display_update();
- 	init_highscore_list();
+ 	
+	init_highscore_list();
 
-	display_update();
-	delay(1000);
+	welcome_screen();
+	
+	Screen s;
+	clear_screen(&s);
+	display_screen(&s);
+	
+	int x;
+	int cactusPos = 140; 
 
-	int rowArrow = 1;
-	int pressed = 0;
-	int view_score = 0;
+	//graphics_object backgroundObjects [] = { create_graphicsObject(grass1, 128, 29, 6, 3 ) };
+	
+
+	int num_of_objects = 1;
+	int n;
 	
 	while(1)
-	{
-		if(btns_released() && pressed)
-			pressed = false;
-		
+	{	
+		clear_screen(&s); // clears screen before next frame
 		switch(state)
 		{
-			case title_screen:
-			
-			switch(rowArrow)
-			{
-				case 1:
-					display_image(25, arrow3);
-					break;
-				case 2:
-					display_image(50, arrow4);
-					break;
-
-			}
-			
-			display_string(0, "    Main Menu");
-			display_string(1, "Play");
-			display_string(2, "Hiscores");
-			display_string(3, "");
-
-			if((btn_left() || btn_right()) && !pressed)
-			{
-				pressed = true;
-				rowArrow++;
-			}
-			else if(btn_p() && !pressed)
-			{
-				pressed = true;
-
-				if(rowArrow == 1)
-					switch_state(in_game);
-				else
-					switch_state(highscore_menu);
- 
-			}
-			
-
-			if(rowArrow > 2)
-				rowArrow = 1;
-
-			break;
 			
 			case main_menu:
 			break;
 
 			case highscore_menu:
-
-			display_string(0, "		Highscores		");
-			if(init)
-			{
-				init = 0;
-				display_string(0, "		Highscores		");
-				print_score(score_list[view_score], 1);
-                print_score(score_list[view_score + 1], 2);
-                print_score(score_list[view_score + 2], 3);
-
-				delay(500);
-			}
-			if(btn_p()&&!pressed)
-			{
-				pressed = true;
-				switch_state(title_screen);
-			}
-			
-
 			break;
 
 			case in_game:
-			if(init)
+			//ground
+			for (x = 0; x < 128; x++)
 			{
-				init = 0;
-				display_string(0, "SCORE: ");
-				display_string(1, "");
-				display_string(2, "");
-				display_string(3, "");
-				delay(500);
-			}
-			display_image(0, ground);
-			display_image(32, ground);
-			display_image(32*2, ground);
-			display_image(32*3, ground);
-			display_image(10, dino1);
+				set_pixel(&s, x, 31, true);
 
-			if(btn_p()&&!pressed)
-			{
-				pressed = true;
-				switch_state(title_screen);
 			}
+
+			texture2screen(&s, dinosaur1, 8, 8, 16, 16);
+			//texture2screen(&s, box, 8, 8, 4, 4);
+			texture2screen(&s, cactus, 8, 8, cactusPos, 23);
+
+			
+			texture2screen(&s, grass1, 6, 3, 80, 29);
+/*
+			for(n = 0; n < num_of_objects; n++)
+			{
+				texture2screen(&s, backgroundObjects[n].texture, backgroundObjects[n].width, backgroundObjects[n].height, backgroundObjects[n].x_pos, 29);
+				backgroundObjects[n].x_pos --;
+
+				if(backgroundObjects[n].x_pos  <= 7)
+					backgroundObjects[n].x_pos = 150;
+			}
+*/
+			cactusPos--;
+
+			if (cactusPos<= 7)
+				cactusPos += 128;
+
+			delay(50);
+
 			break;
 
-			case defeat_screen:
-			break;
+	
+		}		
+		display_screen(&s); //sends pixels to screen 
 
-
-		}
-		
-		//clear_screen();
-		display_update();		
 	}
 	return 0;
 }
-void switch_state(enum game_state st)
-{
+
+void switch_state(enum game_state st){
 	state = st;
 	init = 1;
 }
-
-

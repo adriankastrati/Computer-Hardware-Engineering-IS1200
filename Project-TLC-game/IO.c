@@ -29,6 +29,7 @@ bool btn_left(){
     if((PORTD >> 7) & 0x1) return true;
 
     else return false;
+}
 char btns_released(){
     return (btn_left() == 0 && btn_right() == 0 && btn_right() == 0);
 }
