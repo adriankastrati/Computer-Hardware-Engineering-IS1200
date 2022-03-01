@@ -56,7 +56,7 @@ typedef struct graphics_object{
 	uint8_t y_pos;
 	int width;
 	int height;
-	uint8_t texture[128 * 32];
+	uint8_t texture[128* 32];
 }graphics_object;
 
 void texture2screen(Screen *screen, const uint8_t texture[], int width, int height, int x, int y);
@@ -65,8 +65,8 @@ void set_pixel(Screen * screen, unsigned int x, unsigned int y, bool value);
 void display_screen(Screen *screen);
 void clear_screen(Screen *screen);
 bool is_valid_pixel(int x, int y);
-graphics_object create_game_object(const uint8_t texture[], uint8_t x_pos, uint8_t y_pos, int width, int height);
 
+void populate_game_object(graphics_object *_game_object, const uint8_t _texture[], uint8_t x_pos, uint8_t y_pos, int width, int height);
 
 //score.h
 typedef struct Score{
@@ -75,14 +75,15 @@ typedef struct Score{
     int position; 
 
 } Score;
+extern struct Score score_list[32];
 
 Score create_Score(char* new_name, int points);
 void init_highscore_list();
 void delete_score_list();
 void update_list(Score save_score);
 void print_score(Score ig, int line);
-extern struct Score score_list[32];
 
 //game.h
+
 
 #endif

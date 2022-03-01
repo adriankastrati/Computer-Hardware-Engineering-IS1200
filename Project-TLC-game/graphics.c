@@ -15,26 +15,25 @@
 
 //av nån anledning kan den ej vara i graphics.c och i graphics.h men score kan googla
 //constructor for ingame objects 
-graphics_object create_game_object(const uint8_t texture[], uint8_t x_pos, uint8_t y_pos, int width, int height){
-	graphics_object new_game_object;
-	new_game_object.x_pos = x_pos;
-	new_game_object.y_pos = y_pos;
-	new_game_object.width = width;
-	new_game_object.height = height;
 
-
-	int new_texture_length = sizeof(texture) / sizeof(uint8_t);
-	int i;	
-	for(i = 0; i < 128; i++){
-		if(i <= new_texture_length){
-			new_game_object.texture[i] = texture[i];
+void populate_game_object(graphics_object *game_object, const uint8_t texture_in[], uint8_t x_pos, uint8_t y_pos, int width, int height){
+	game_object -> x_pos = x_pos;
+	game_object -> y_pos = y_pos;
+	game_object -> width = width;
+	game_object -> height = height;
+	
+	int texture_size = sizeof(texture_in) / sizeof(uint8_t);
+	int i;
+	for(i = 0; i < 128 * 32; i++){
+		if(i < texture_size){
+			game_object -> texture[i] = texture_in[i];
 		}
-		else
-		new_game_object.texture[i] = 0;
-	}	
 
-    return new_game_object;
+		else
+		game_object -> texture[i] = 0;
+	}	
 }
+
 
 char textbuffer[4][16];
 

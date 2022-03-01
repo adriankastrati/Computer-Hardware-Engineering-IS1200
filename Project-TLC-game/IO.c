@@ -1,7 +1,11 @@
- #include <stdint.h>
-#include <pic32mx.h>
-#include "graphics.h"
+#include <stdint.h>   
+#include <stdio.h>
+#include <math.h>
 #include <stdbool.h>
+
+#include "graphics.h"
+#include <pic32mx.h> 
+
 
 
 void init_io(void){

@@ -5,18 +5,6 @@
 #include <stdbool.h>
 #include "graphics.h"
 
-
-/*
-typedef struct Score{
-    char name[3];
-    int points;
-    int position; 
-
-} Score;
-
-struct Score score_list[32];
-*/
-
 Score create_Score(char* new_name, int points){
     int i;
     Score new_Score;
@@ -42,19 +30,6 @@ void init_highscore_list(){
     }
 }
 
-void delete_score_list(){
-    int i;
-    int n;
-    for(i = 0; i < MAX_SCORES; i++){
-        for(n = 0; n < 3; n++){
-            score_list[i].name[n] = 45;
-        }
-        score_list[i].points = 0;
-        score_list[i].position = i;
-    }
-
-    //write over value on kit
-}
 
 void update_list(Score save_score){
     char edited = 0;
@@ -65,7 +40,7 @@ void update_list(Score save_score){
     Score temp1;
 
 
-    for(i = 0, j = 0; i < 31; i++, j++){    
+    for(i = 0, j = 0; i < MAX_SCORES - 1; i++, j++){    
         if(save_score.points < score_list[i].points){
             continue;
         }

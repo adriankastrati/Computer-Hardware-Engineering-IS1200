@@ -12,7 +12,6 @@ int init = 0;
 void switch_state();
 
 int main(){
-
 	//if (state == title_screen){}
 
 	display_init();
