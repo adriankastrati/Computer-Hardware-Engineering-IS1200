@@ -24,11 +24,13 @@ int main(){
 	display_screen(&s);
 	
 
-	int x;
-	int cactusPos = 100; 
-	int num_of_objects = 1;
-	int n;
-	int dino_ground_pos = 23;
+	uint8_t x;
+	uint8_t cactusPos = 100; 
+	uint8_t num_of_objects = 1;
+	uint8_t n;
+	uint8_t dino_ground_pos = 23;
+	uint8_t dino_anim_stage = 0;
+	uint8_t dino_anim_frame_count = 1;
 	
 	while(1)
 	{	
@@ -69,7 +71,7 @@ int main(){
 
 			//print dino
 			texture2screen(&s, dinosaur1, 8, 8, 40, dino_ground_pos - jump_value);	
-			
+
 			//check if texture collide with objects on screen, freeze screen
 			if(is_collision(&s, cactus, 8, 8, cactusPos, 21)) 
 			{
