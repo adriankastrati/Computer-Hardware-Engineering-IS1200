@@ -34,6 +34,7 @@ bool btn_left();
 
 //interrupts
 void enable_interrupt(void);
+void init_timer();
 
 
 //from labs

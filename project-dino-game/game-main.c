@@ -42,22 +42,16 @@ int main(){
 			case highscore_menu:
 			break;
 
-			case in_game:
-
-			clear_screen(&s);
-
-
-    		if( (IFS(0) & 0x100) == 0x100 ){      
-	      		IFSCLR(0) = 1 << 8;
-    
-				if(btn_up && !jumping && !falling){
+			case in_game:	      						      
+				if(btn_up){
 				
 					jumping = true;
 				}
 
 				if(jumping){
 					jump_value ++;
-					if(jump_value >= 8)
+					
+					if(jump_value == 8)
 					{
 						jumping = false;
 						falling = true;
@@ -72,32 +66,38 @@ int main(){
 						falling = false;
 					}
 				}
-
-				display_screen(&s); //sends pixels to screen 
-
-			}			
 			
-			texture2screen(&s, dinosaur1, 8, 8, 20, dino_ground_pos - jump_value);
+			//print dino
+			texture2screen(&s, dinosaur1, 8, 8, 20, dino_ground_pos - jump_value);	
 			
+			//check if texture collide with objects on screen, freeze screen
+			if(is_collision(&s, cactus, 8, 8, cactusPos, 21)) while(1){}
+
+			//print enemy texture
+			texture2screen(&s, cactus, 8, 8, cactusPos, 21);
+
+			//print background
+			texture2screen(&s, grass1, 6, 3, cactusPos + 10, 29);
+			
+			//ground
+			for (x = 0; x < 128; x++){
+				set_pixel(&s, x, 31, true);
+			}
+			
+
 			cactusPos--;
-			jump_value--;
 			if (cactusPos<= 7)
 				cactusPos += 128;
-
-			delay(20);
 			
-			if(is_collision(&s, cactus, 8, 8, cactusPos, 21))
-			{}
-			texture2screen(&s, cactus, 8, 8, cactusPos, 21);
+			//ground
+			for (x = 0; x < 128; x++){
+				set_pixel(&s, x, 31, true);
+			}
 		}		
 		
-		for (x = 0; x < 128; x++){
-				set_pixel(&s, x, 31, true);
-		}
+		display_screen(&s);
+		delay(20);
 		
-		texture2screen(&s, grass1, 6, 3, cactusPos + 10, 29);
-
-
 
 	}
 	return 0;
