@@ -24,14 +24,23 @@ int main(){
 	display_screen(&s);
 	
 
+
 	uint8_t x;
 	uint8_t cactusPos = 100; 
 	uint8_t num_of_objects = 1;
 	uint8_t n;
-	uint8_t dino_ground_pos = 19;
+	uint8_t dino_ground_pos = 15;
 	uint8_t dino_anim_stage = 0;
 	uint8_t dino_anim_frame_count = 3;
-	
+
+	int speed = 1;
+
+	Score player_score;
+	player_score.points = 0;
+	player_score.position = 0;
+
+	set_name(&player_score, 65, 68, 82);	
+
 	while(1)
 	{	
 		clear_screen(&s); // clears screen before next frame
@@ -44,7 +53,7 @@ int main(){
 			case highscore_menu:
 			break;
 
-			case in_game:	      						      
+			case in_game:
 				if(btn_up() && !jumping && !falling){
 				
 					jumping = true;
@@ -88,7 +97,13 @@ int main(){
 			//check if texture collide with objects on screen, freeze screen
 			if(is_collision(&s, cactus, 8, 8, cactusPos, 21)) 
 			{
-				while(1);
+				while(1){
+					print_score(player_score, 2);
+					display_string(0, "");
+					display_string(3, "");
+					display_string(1, "");
+					display_update();
+				}
 			}
 			//print enemy texture
 			texture2screen(&s, cactus, 8, 8, cactusPos, 21);
@@ -102,22 +117,41 @@ int main(){
 			}
 			
 
-			cactusPos--;
-			if (cactusPos<= 10)
-				cactusPos += 128;
-			
 
+			cactusPos--;
+			if(cactusPos <= 10){
+				player_score.points++;
+			}
+			
+			if(cactusPos <= 10){
+				cactusPos += 128;
+			}	
+
+			
 			//ground
 			for (x = 0; x < 128; x++){
 				set_pixel(&s, x, 31, true);
 			}
 		}		
 		
+		speed = 20 - player_score.points / 2;
+		if (speed <= 5) speed = 5;
+
 		display_screen(&s);
-		delay(20);
+		delay(speed);
+		
+		break;
+
+		case defeat_screen:
+		display_string(0, "Enter name:");
+		
 		
 
+		break;
 	}
+
+
+
 	return 0;
 }
 
