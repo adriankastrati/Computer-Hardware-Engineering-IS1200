@@ -247,9 +247,9 @@ void clear_screen(Screen *screen)
 	}
 }
 
-void texture2screen(Screen *screen, const uint8_t texture[], int width, int height, int x, int y)
+void texture2screen(Screen *screen, const uint8_t texture[], uint8_t width, uint8_t height, uint8_t x, uint8_t y)
 {
-	int i, j;
+	uint8_t i, j;
 
 	for(i = 0; i < height; i++)
 	{

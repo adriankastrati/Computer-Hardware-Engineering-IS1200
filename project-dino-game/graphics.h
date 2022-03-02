@@ -56,7 +56,7 @@ typedef struct Screen{
         int pixels[128];
 }Screen;
 
-void texture2screen(Screen *screen, const uint8_t texture[], int width, int height, int x, int y);
+void texture2screen(Screen *screen, const uint8_t texture[], uint8_t width, uint8_t height, uint8_t x, uint8_t y);
 /*
 void obj2screen(Screen *screen, graphics_object *object);
 */
@@ -85,6 +85,6 @@ void update_list(Score save_score);
 void print_score(Score ig, int line);
 
 //game.h
-bool is_collision(Screen *screen, const uint8_t texture[], int width, int height, int x, int y);
+bool is_collision(Screen *screen, const uint8_t texture[], uint8_t width, uint8_t height, uint8_t x, uint8_t y);
 
 #endif
