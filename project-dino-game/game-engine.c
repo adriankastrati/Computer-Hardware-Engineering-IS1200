@@ -10,7 +10,7 @@
 //move objects on x-axis
 //put bad guy on screen
 
-bool is_collision(Screen *screen, const uint8_t texture[], int width, int height, int x, int y){
+bool is_collision(Screen *screen, const uint8_t texture[], uint8_t width, uint8_t height, uint8_t x, uint8_t y){
 	int i, j;
 
 	for(i = 0; i < height; i++)
