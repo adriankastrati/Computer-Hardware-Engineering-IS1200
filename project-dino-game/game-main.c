@@ -7,31 +7,28 @@
 
 enum game_state{main_menu, highscore_menu, in_game, defeat_screen};
 enum game_state state = in_game;
-int init = 0;
 
-void switch_state();
+int init = 0;
+int jump_value = 0;
+bool jumping = false;
+bool falling = false;
 
 int main(){
-	//if (state == title_screen){}
-
 	display_init();
- 	
-	init_highscore_list();
-
-	welcome_screen();
 	
+	welcome_screen();
+
+	//screen init
 	Screen s;
 	clear_screen(&s);
 	display_screen(&s);
 	
+
 	int x;
-	int cactusPos = 140; 
-
-	//graphics_object backgroundObjects [] = { create_graphicsObject(grass1, 128, 29, 6, 3 ) };
-	
-
+	int cactusPos = 100; 
 	int num_of_objects = 1;
 	int n;
+	int dino_ground_pos = 26;
 	
 	while(1)
 	{	
@@ -46,41 +43,61 @@ int main(){
 			break;
 
 			case in_game:
-			//ground
-			for (x = 0; x < 128; x++)
-			{
-				set_pixel(&s, x, 31, true);
 
-			}
+			clear_screen(&s);
 
-			texture2screen(&s, dinosaur1, 8, 8, 16, 16);
-			//texture2screen(&s, box, 8, 8, 4, 4);
-			texture2screen(&s, cactus, 8, 8, cactusPos, 23);
 
+    		if( (IFS(0) & 0x100) == 0x100 ){      
+	      		IFSCLR(0) = 1 << 8;
+    
+				if(btn_up && !jumping && !falling){
+				
+					jumping = true;
+				}
+
+				if(jumping){
+					jump_value ++;
+					if(jump_value >= 8)
+					{
+						jumping = false;
+						falling = true;
+					}
+				}
+
+				if(falling){
+					jump_value--;
+
+					if (jump_value == 0)
+					{
+						falling = false;
+					}
+				}
+
+				display_screen(&s); //sends pixels to screen 
+
+			}			
 			
-			texture2screen(&s, grass1, 6, 3, 80, 29);
-/*
-			for(n = 0; n < num_of_objects; n++)
-			{
-				texture2screen(&s, backgroundObjects[n].texture, backgroundObjects[n].width, backgroundObjects[n].height, backgroundObjects[n].x_pos, 29);
-				backgroundObjects[n].x_pos --;
-
-				if(backgroundObjects[n].x_pos  <= 7)
-					backgroundObjects[n].x_pos = 150;
-			}
-*/
+			texture2screen(&s, dinosaur1, 8, 8, 20, dino_ground_pos - jump_value);
+			
 			cactusPos--;
-
+			jump_value--;
 			if (cactusPos<= 7)
 				cactusPos += 128;
 
-			delay(50);
-
-			break;
-
-	
+			delay(20);
+			
+			if(is_collision(&s, cactus, 8, 8, cactusPos, 21))
+			{}
+			texture2screen(&s, cactus, 8, 8, cactusPos, 21);
 		}		
-		display_screen(&s); //sends pixels to screen 
+		
+		for (x = 0; x < 128; x++){
+				set_pixel(&s, x, 31, true);
+		}
+		
+		texture2screen(&s, grass1, 6, 3, cactusPos + 10, 29);
+
+
 
 	}
 	return 0;

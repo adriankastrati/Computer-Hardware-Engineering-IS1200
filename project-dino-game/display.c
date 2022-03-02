@@ -211,7 +211,7 @@ bool get_pixel( Screen * screen, unsigned int x, unsigned int y){
     return ((screen->pixels[x]) >> y) & 1;
 }
 
-void set_pixel(Screen * screen, unsigned int x, unsigned int y, bool value){
+void set_pixel(Screen *screen, unsigned int x, unsigned int y, bool value){
     //clear bit
     screen -> pixels[x] &= ~(1 << y);
     //mask in value
@@ -232,7 +232,7 @@ void display_screen(Screen *screen) {
         // Send bytes
         
         for(j = 0; j < 128; j++) {
-            uint8_t data = screen->pixels[j] >> (i*8);
+            uint8_t data = screen -> pixels[j] >> (i*8);
 
             spi_send_recv(data);
         }
@@ -259,6 +259,23 @@ void texture2screen(Screen *screen, const uint8_t texture[], int width, int heig
 				set_pixel(&screen, x + j, y + i, true);
 		}
 	}
+}
+
+void obj2screen(Screen *screen, graphics_object *object){
+	int i, j;
+	int y = object -> y_pos;
+	int x = object -> x_pos;
+
+
+	for(i = 0; i < object -> height; i++){
+
+		for(j = 0; j < object -> width; j++){
+			if(object -> texture[i * 8 + j])
+				set_pixel(&screen, x + j, y + i, true);
+		}
+		
+	}
+	
 }
 
 bool is_valid_pixel(int x, int y){

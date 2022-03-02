@@ -4,7 +4,7 @@
 #include <math.h>
 #include <stdbool.h>
 #include "graphics.h"
-
+/*
 Score create_Score(char* new_name, int points){
     int i;
     Score new_Score;
@@ -101,3 +101,4 @@ void print_score(Score ig, int line){
 
     display_string(line, ret_arr);
 }
+*/

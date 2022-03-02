@@ -20,6 +20,10 @@ extern const uint8_t const font[128*8];
 extern const uint8_t const icon[128];
 void welcome_screen();
 
+//menu.h
+void switch_state();
+
+
 //io.h
 int getbtns(void);
 int getsw(void);
@@ -60,13 +64,15 @@ typedef struct graphics_object{
 }graphics_object;
 
 void texture2screen(Screen *screen, const uint8_t texture[], int width, int height, int x, int y);
+void obj2screen(Screen *screen, graphics_object *object);
+
 bool get_pixel(Screen * screen, unsigned int x, unsigned int y);
 void set_pixel(Screen * screen, unsigned int x, unsigned int y, bool value);
 void display_screen(Screen *screen);
 void clear_screen(Screen *screen);
 bool is_valid_pixel(int x, int y);
 
-void populate_game_object(graphics_object *_game_object, const uint8_t _texture[], uint8_t x_pos, uint8_t y_pos, int width, int height);
+void edit_game_object(graphics_object *game_object, const uint8_t texture_in[], uint8_t x_pos, uint8_t y_pos, int width, int height);
 
 //score.h
 typedef struct Score{
@@ -84,6 +90,6 @@ void update_list(Score save_score);
 void print_score(Score ig, int line);
 
 //game.h
-
+bool is_collision(Screen *screen, const uint8_t texture[], int width, int height, int x, int y);
 
 #endif
