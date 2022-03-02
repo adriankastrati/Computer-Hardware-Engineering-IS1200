@@ -255,7 +255,7 @@ void texture2screen(Screen *screen, const uint8_t texture[], int width, int heig
 	{
 		for(j = 0; j < width; j++)
 		{
-			if(texture[i * 8 + j] && is_valid_pixel(x + j, y + i))
+			if(texture[i * width + j] && is_valid_pixel(x + j, y + i))
 				set_pixel(&screen, x + j, y + i, true);
 		}
 	}

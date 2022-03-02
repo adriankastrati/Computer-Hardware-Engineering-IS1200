@@ -17,7 +17,10 @@ bool is_collision(Screen *screen, const uint8_t texture[], int width, int height
 	{
 		for(j = 0; j < width; j++)
 		{
-			if(get_pixel(&screen, x + j, y + i))
+			if(x+j >= 128 || y+i >= 32)
+				continue;
+
+			if(get_pixel(&screen, x + j, y + i) && texture[i * width + j])//
 				return true;
 		}
 	}

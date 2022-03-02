@@ -28,7 +28,7 @@ int main(){
 	int cactusPos = 100; 
 	int num_of_objects = 1;
 	int n;
-	int dino_ground_pos = 26;
+	int dino_ground_pos = 23;
 	
 	while(1)
 	{	
@@ -43,7 +43,7 @@ int main(){
 			break;
 
 			case in_game:	      						      
-				if(btn_up){
+				if(btn_up() && !jumping && !falling){
 				
 					jumping = true;
 				}
@@ -51,13 +51,13 @@ int main(){
 				if(jumping){
 					jump_value ++;
 					
-					if(jump_value == 8)
+					if(jump_value == 25)
 					{
 						jumping = false;
 						falling = true;
 					}
 				}
-
+				
 				if(falling){
 					jump_value--;
 
@@ -66,18 +66,20 @@ int main(){
 						falling = false;
 					}
 				}
-			
+
 			//print dino
-			texture2screen(&s, dinosaur1, 8, 8, 20, dino_ground_pos - jump_value);	
+			texture2screen(&s, dinosaur1, 8, 8, 40, dino_ground_pos - jump_value);	
 			
 			//check if texture collide with objects on screen, freeze screen
-			if(is_collision(&s, cactus, 8, 8, cactusPos, 21)) while(1){}
-
+			if(is_collision(&s, cactus, 8, 8, cactusPos, 21)) 
+			{
+				while(1);
+			}
 			//print enemy texture
 			texture2screen(&s, cactus, 8, 8, cactusPos, 21);
 
 			//print background
-			texture2screen(&s, grass1, 6, 3, cactusPos + 10, 29);
+			//texture2screen(&s, grass1, 6, 3, cactusPos + 10, 29);
 			
 			//ground
 			for (x = 0; x < 128; x++){
@@ -86,9 +88,10 @@ int main(){
 			
 
 			cactusPos--;
-			if (cactusPos<= 7)
+			if (cactusPos<= 10)
 				cactusPos += 128;
 			
+
 			//ground
 			for (x = 0; x < 128; x++){
 				set_pixel(&s, x, 31, true);
