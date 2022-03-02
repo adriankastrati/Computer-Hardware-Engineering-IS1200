@@ -4,7 +4,9 @@
 #include <math.h>
 #include <stdbool.h>
 #include "graphics.h"
-/*
+
+Score score_list[MAX_SCORES];
+
 Score create_Score(char* new_name, int points){
     int i;
     Score new_Score;
@@ -101,4 +103,12 @@ void print_score(Score ig, int line){
 
     display_string(line, ret_arr);
 }
-*/
+
+void set_name(Score *score, char a, char b, char c){
+    
+    
+
+    score -> name[0] = a;
+    score -> name[1] = b;
+    score -> name[2] = c;
+}

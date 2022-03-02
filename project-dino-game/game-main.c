@@ -149,9 +149,6 @@ int main(){
 				{
 					objects[x].x_pos += 150;
 				}
-
-				
-				
 			}
 
 			//print background

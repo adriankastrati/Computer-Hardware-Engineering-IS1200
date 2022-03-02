@@ -76,6 +76,7 @@ typedef struct Score{
 
 } Score;
 extern struct Score score_list[32];
+void set_name(Score *score, char a, char b, char c);
 
 Score create_Score(char* new_name, int points);
 void init_highscore_list();
