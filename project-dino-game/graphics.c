@@ -15,7 +15,7 @@
 
 //av nån anledning kan den ej vara i graphics.c och i graphics.h men score kan googla
 //constructor for ingame objects 
-
+/*
 void edit_game_object(graphics_object *game_object, const uint8_t texture_in[], uint8_t x_pos, uint8_t y_pos, int width, int height){
 	game_object -> x_pos = x_pos;
 	game_object -> y_pos = y_pos;
@@ -34,7 +34,7 @@ void edit_game_object(graphics_object *game_object, const uint8_t texture_in[], 
 		i++;
 	}
 }
-
+*/
 
 char textbuffer[4][16];
 
@@ -170,9 +170,9 @@ const uint8_t const font[] = {
 };
 const uint8_t const dinosaur1 [] = {
 	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
-	0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 
-	0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0,
-	0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0,
+	0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 
+	0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0,
+	0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0,
 	0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0,
 	0, 0, 0, 0, 1, 1, 1, 0, 1, 0, 0, 0,
 	0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0,

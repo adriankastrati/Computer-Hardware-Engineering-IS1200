@@ -26,4 +26,18 @@ bool is_collision(Screen *screen, const uint8_t texture[], int width, int height
 	}
 
 	return false;
+}/*
+bool collided(const uint8_t texture[], uint8_t width, uint8_t height, uint8_t at_x, uint8_t at_y)
+{
+	for(i = 0; i < height; i++)
+	{
+		for(j = 0; j < width; j++)
+		{
+			if(texture[(i * width + j])
+				return true;
+		}
+	}
+
+	return false;
 }
+*/

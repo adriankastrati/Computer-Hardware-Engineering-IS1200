@@ -56,25 +56,18 @@ typedef struct Screen{
         int pixels[128];
 }Screen;
 
-typedef struct graphics_object{
-	uint8_t x_pos;
-	uint8_t y_pos;
-	int width;
-	int height;
-	uint8_t texture[128* 32];
-}graphics_object;
-
 void texture2screen(Screen *screen, const uint8_t texture[], int width, int height, int x, int y);
+/*
 void obj2screen(Screen *screen, graphics_object *object);
-
+*/
 bool get_pixel(Screen * screen, unsigned int x, unsigned int y);
 void set_pixel(Screen * screen, unsigned int x, unsigned int y, bool value);
 void display_screen(Screen *screen);
 void clear_screen(Screen *screen);
 bool is_valid_pixel(int x, int y);
-
+/*
 void edit_game_object(graphics_object *game_object, const uint8_t texture_in[], uint8_t x_pos, uint8_t y_pos, int width, int height);
-
+*/
 //score.h
 typedef struct Score{
     char name[3];

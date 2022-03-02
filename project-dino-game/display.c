@@ -260,7 +260,7 @@ void texture2screen(Screen *screen, const uint8_t texture[], int width, int heig
 		}
 	}
 }
-
+/*
 void obj2screen(Screen *screen, graphics_object *object){
 	int i, j;
 	int y = object -> y_pos;
@@ -277,7 +277,7 @@ void obj2screen(Screen *screen, graphics_object *object){
 	}
 	
 }
-
+*/
 bool is_valid_pixel(int x, int y){
 	return (x >= 0 && x < 128 && y >= 0 && y < 32);
 	
