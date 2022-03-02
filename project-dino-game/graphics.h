@@ -10,9 +10,9 @@
 
 
 //texture.h
-const uint8_t const dinosaur1 [64];
-const uint8_t const dinosaur2 [64];
-const uint8_t const dinosaur3 [64];
+const uint8_t const dinosaur1 [144];
+const uint8_t const dinosaur2 [144];
+const uint8_t const dinosaur3 [144];
 const uint8_t const box [64];
 const uint8_t const cactus [64];
 const uint8_t const grass1 [18];
