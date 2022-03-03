@@ -7,16 +7,16 @@
 
 Score score_list[MAX_SCORES];
 
-Score create_Score(char* new_name, int points){
+Score create_score(){
+    Score new;
     int i;
-    Score new_Score;
     for(i = 0; i < 3; i++){
-        new_Score.name[i] = new_name[i];
+        new.name[i] = 32;
     }
 
-    new_Score.points = points;
-
-    return new_Score;
+    new.points = 0;
+    
+    return new;
 }
 
 void init_highscore_list(){
@@ -33,7 +33,7 @@ void init_highscore_list(){
 }
 
 
-void update_list(Score save_score){
+void update_list(Score *save_score){
     char edited = 0;
     int i;
     int j;
@@ -43,15 +43,16 @@ void update_list(Score save_score){
 
 
     for(i = 0, j = 0; i < MAX_SCORES - 1; i++, j++){    
-        if(save_score.points < score_list[i].points){
+        if(save_score -> points < score_list[i].points){
             continue;
         }
         
         if(!added){
             temp0 = score_list[i];
-            score_list[i] = save_score;
+            score_list[i] = *save_score;
 
             score_list[i].position = i + 1;
+            save_score -> position = i + 1;
             added = true;
             continue;
         }
