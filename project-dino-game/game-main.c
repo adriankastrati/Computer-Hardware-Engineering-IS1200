@@ -20,23 +20,6 @@ struct Object{
 	uint8_t y_pos;
 };
 
-struct xorshift32_state {
-  uint32_t a;
-};
-
-/* The state word must be initialized to non-zero */
-uint32_t xorshift32(struct xorshift32_state *state)
-{
-	/* Algorithm "xor" from p. 4 of Marsaglia, "Xorshift RNGs" */
-	uint32_t x = state->a;
-	x ^= x << 13;
-	x ^= x >> 17;
-	x ^= x << 5;
-	return state->a = x;
-}
-
-
-
 int main(){
 	display_init();
 	
@@ -170,11 +153,11 @@ int main(){
 				set_pixel(&s, x, 31, true);
 
 			texture2screen(&s, cloud, 8, 8, cloud_pos, 10);
-
+			
 			cloud_counter++;
-			if(cloud_counter == 3){
+			if(cloud_counter == 10){
 				cloud_counter = 0;
-				cloud_speed ++;
+				cloud_pos--;
 			}
 			if(cloud_pos <= 10)
 				cloud_pos += (random_value*2 + 300);
