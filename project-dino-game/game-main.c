@@ -42,6 +42,8 @@ int main(){
 	char cloud_counter = 0;
 	uint16_t cloud_pos = 128;
 	uint16_t big_cloud_pos = 50;
+	uint8_t cloud_y = 0;
+	bool cloud_dropping = true;
 
 	uint8_t n;
 	uint8_t dino_ground_pos = 19;
@@ -151,8 +153,8 @@ int main(){
 			for (x = 0; x < 128; x++)
 				set_pixel(&s, x, 31, true);
 
-			texture2screen(&s, cloud, 8, 8, cloud_pos, 10);
-			texture2screen(&s, big_cloud, 12, 8, big_cloud_pos, 5);
+			texture2screen(&s, cloud, 8, 8, cloud_pos, 10+ cloud_y);
+			texture2screen(&s, big_cloud, 12, 8, big_cloud_pos, 5 + cloud_y);
 			cloud_counter++;
 			if(cloud_counter == 10){
 				cloud_counter = 0;
@@ -163,6 +165,19 @@ int main(){
 				cloud_pos += (random_value*2 + 300);
 			if(big_cloud_pos <= 10)
 				big_cloud_pos += (random_value*3 + 300);
+
+			if(cloud_dropping)
+			{
+				cloud_y++;
+				if(cloud_y > 10)
+					cloud_dropping = false;
+			}
+			else
+			{
+				cloud_y--;
+				if(cloud_y == 0)
+					cloud_dropping = true;
+			}
 			
 		}		
 		
