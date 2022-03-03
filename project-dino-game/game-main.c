@@ -58,6 +58,7 @@ int main(){
 
 	char cloud_counter = 0;
 	uint16_t cloud_speed = 0;
+	uint16_t cloud_pos = 128;
 
 
 	uint8_t n;
@@ -163,22 +164,20 @@ int main(){
 			//ground
 			for (x = 0; x < 128; x++)
 				set_pixel(&s, x, 31, true);
-			
-			
-			if (cactusPos<= 10)
-				cactusPos += 128;
-			
 
 			//ground
-			for (x = 0; x < 128; x++){
+			for (x = 0; x < 128; x++)
 				set_pixel(&s, x, 31, true);
-			}
+
+			texture2screen(&s, cloud, 8, 8, cloud_pos, 10);
 
 			cloud_counter++;
 			if(cloud_counter == 3){
 				cloud_counter = 0;
 				cloud_speed ++;
 			}
+			if(cloud_pos <= 10)
+				cloud_pos += (random_value*2 + 300);
 
 			
 		}		

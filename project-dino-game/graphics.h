@@ -14,6 +14,7 @@ const uint8_t const dinosaur1 [144];
 const uint8_t const dinosaur2 [144];
 const uint8_t const dinosaur3 [144];
 const uint8_t const box [64];
+const uint8_t const cloud [64];
 const uint8_t const cactus [64];
 const uint8_t const grass1 [18];
 extern const uint8_t const font[128*8];
