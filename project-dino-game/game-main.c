@@ -14,6 +14,7 @@ int init = 0;
 int jump_value = 0;
 bool jumping = false;
 bool falling = false;
+bool first_start = true;
 
 struct Object{
 	uint8_t x_pos;
@@ -21,14 +22,21 @@ struct Object{
 };
 
 int main(){
+
 	display_init();
-	
-	welcome_screen();
+
+	start:
+
+	if(first_start){
+		welcome_screen();
+		first_start = false;
+	}
 
 	//screen init
 	Screen s;
 	clear_screen(&s);
 	display_screen(&s);
+
 
 	Score score;
 	score.points = 0;
@@ -86,17 +94,26 @@ int main(){
 			break;
 
 			case defeat_screen:
+				dead = 0;
+				update_list(&score);
+				
 				while(1){
-					delay(1000);
-						if(btn_up()){
-							
-							display_string(0 ,"You died!");
-							display_string(1, itoaconv(score.points));
-							display_string(2 ,"");
-							display_string(3 ,"");
-							display_update();
-						}
+					if(btn_up()){
+						display_string(0 ,"You died!");
+						print_score(score ,2);
+						display_string(1, "Rank    Points");
+
+						display_string(3 ,"");
+						display_update();
 					}
+
+					if(btn_right()){
+						score = create_score();
+						switch_state(in_game);
+						goto start;
+
+					}
+				}
 			break;
 
 			case in_game:
@@ -124,7 +141,8 @@ int main(){
 						falling = false;
 				}
 
-			for(x = 0; x < 4; x++){ //dino anim
+				//checks if current dino collides with a cactus
+				for(x = 0; x < 4; x++){ //dino anim
 					
 					clear_screen(&s);
 					if(dino_anim_stage <= 1)
@@ -150,8 +168,12 @@ int main(){
 			if(dino_anim_stage >= (dino_anim_frame_count+1)*2)
 				dino_anim_stage = 0;
 
+
 			for(x = 0; x < num_of_objects; x++){
-	
+				
+				if(x < 4 && objects[x].x_pos < 40 && objects[x].x_pos > 38){
+						score.points++;
+				}
 
 				if(x < 4)
 					texture2screen(&s, cactus, 8, 8, objects[x].x_pos, objects[x].y_pos);
@@ -159,16 +181,14 @@ int main(){
 					texture2screen(&s, grass1, 6, 3, objects[x].x_pos, objects[x].y_pos);
 
 				objects[x].x_pos --;
+				
+				
 
 				if(objects[x].x_pos <= 10){
-					if(x < 4){
-						score.points++;
-						
+					if(x < 4){						
 						if((score.points % 2) && speed > 10)
 							speed -= 2;
 					}
-
-					
 						
 					objects[x].x_pos += (random_value + 130);
 				}
@@ -191,24 +211,23 @@ int main(){
 				cloud_y++;
 				if(cloud_y > 2)
 					cloud_dropping = false;
-			}
+				}
 			else
 			{
 				cloud_y--;
 				if(cloud_y == 0)
 					cloud_dropping = true;
-			}
+				}	
+
 				cloud_counter = 0;
 				cloud_pos--;
 				big_cloud_pos--;
 			}
+
 			if(cloud_pos <= 15)
 				cloud_pos += (random_value * 2 + 300);
 			if(big_cloud_pos <= 10)
 				big_cloud_pos += (random_value * 3 + 300);
-
-			
-			
 		}
 
 		

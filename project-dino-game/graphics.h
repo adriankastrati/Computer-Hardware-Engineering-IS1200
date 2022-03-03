@@ -81,10 +81,10 @@ typedef struct Score{
 extern struct Score score_list[32];
 
 void set_name(Score *score, char a, char b, char c);
-Score create_Score(char* new_name, int points);
+Score create_score();
 void init_highscore_list();
 void delete_score_list();
-void update_list(Score save_score);
+void update_list(Score *save_score);
 void print_score(Score ig, int line);
 void set_name(Score *score, char a, char b, char c);
 
