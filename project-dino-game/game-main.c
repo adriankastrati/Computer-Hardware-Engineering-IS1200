@@ -15,11 +15,25 @@ int jump_value = 0;
 bool jumping = false;
 bool falling = false;
 
-
 struct Object{
 	uint8_t x_pos;
 	uint8_t y_pos;
 };
+
+struct xorshift32_state {
+  uint32_t a;
+};
+
+/* The state word must be initialized to non-zero */
+uint32_t xorshift32(struct xorshift32_state *state)
+{
+	/* Algorithm "xor" from p. 4 of Marsaglia, "Xorshift RNGs" */
+	uint32_t x = state->a;
+	x ^= x << 13;
+	x ^= x >> 17;
+	x ^= x << 5;
+	return state->a = x;
+}
 
 
 
@@ -83,12 +97,10 @@ int main(){
 			case in_game:
 				random_value = xorshift32(&rand);
 				random_value = random_value % 20;
-
-	      						      
-				if(btn_up() && !jumping && !falling){
-				
+	      
+				if(btn_up() && !jumping && !falling)
 					jumping = true;
-				}
+				
 
 				if(jumping){
 					jump_value ++;
@@ -104,18 +116,11 @@ int main(){
 					jump_value--;
 
 					if (jump_value == 0)
-					{
 						falling = false;
-					}
 				}
 
-			//print dino
-						
-
-			
-
-			//check if texture collide with objects on screen, freeze screen
-			for(x = 0; x < 4; x++){
+			for(x = 0; x < 4; x++){ //dino anim
+					
 					clear_screen(&s);
 					if(dino_anim_stage <= 1)
 						texture2screen(&s, dinosaur1, 12, 12, 40, dino_ground_pos - jump_value);
@@ -143,34 +148,22 @@ int main(){
 			for(x = 0; x < num_of_objects; x++)
 			{
 				if(x < 4)
-				{
 					texture2screen(&s, cactus, 8, 8, objects[x].x_pos, objects[x].y_pos);
-					/*(i)f(is_collision(&s, cactus, 8, 8, objects[x].x_pos, objects[x].y_pos))
-					{
-						//while(1);
-					}*/
-				}
-
 				else
-				{
 					texture2screen(&s, grass1, 6, 3, objects[x].x_pos, objects[x].y_pos);
-				}
 
 				objects[x].x_pos --;
 
 				if(objects[x].x_pos <= 10)
-				{
-					objects[x].x_pos = objects[x].x_pos + 128+ random_value;
-				}
+					objects[x].x_pos += (random_value + 130);
 			}
 
 			//print background
-			//texture2screen(&s, grass1, 6, 3, cactusPos + 10, 29);
 			
 			//ground
-			for (x = 0; x < 128; x++){
+			for (x = 0; x < 128; x++)
 				set_pixel(&s, x, 31, true);
-			}
+			
 			
 			if (cactusPos<= 10)
 				cactusPos += 128;
@@ -202,5 +195,3 @@ void switch_state(enum game_state st){
 	state = st;
 	init = 1;
 }
-
-
