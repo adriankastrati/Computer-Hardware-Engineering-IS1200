@@ -36,6 +36,7 @@ uint32_t xorshift32(struct xorshift32_state *state)
 }
 
 
+
 int main(){
 	display_init();
 	
@@ -49,6 +50,12 @@ int main(){
 
 	uint8_t x;
 	uint8_t cactusPos = 100; 
+
+	unsigned char random_value;
+	struct rand_state rand;
+	rand.a = 1;
+	int current_random;
+
 
 	uint8_t n;
 	uint8_t dino_ground_pos = 19;
@@ -83,9 +90,12 @@ int main(){
 			case highscore_menu:
 			break;
 
-			case in_game:	      						      
+			case in_game:
+				random_value = xorshift32(&rand);
+				random_value = random_value % 20;
+
+	      						      
 				if(btn_up() && !jumping && !falling){
-				
 					jumping = true;
 				}
 
@@ -137,34 +147,22 @@ int main(){
 			for(x = 0; x < num_of_objects; x++)
 			{
 				if(x < 4)
-				{
 					texture2screen(&s, cactus, 8, 8, objects[x].x_pos, objects[x].y_pos);
-					/*(i)f(is_collision(&s, cactus, 8, 8, objects[x].x_pos, objects[x].y_pos))
-					{
-						//while(1);
-					}*/
-				}
-
 				else
-				{
 					texture2screen(&s, grass1, 6, 3, objects[x].x_pos, objects[x].y_pos);
-				}
 
 				objects[x].x_pos --;
 
 				if(objects[x].x_pos <= 10)
-				{
-					objects[x].x_pos += 150;
-				}
+					objects[x].x_pos += (random_value + 130);
 			}
 
 			//print background
-			//texture2screen(&s, grass1, 6, 3, cactusPos + 10, 29);
 			
 			//ground
-			for (x = 0; x < 128; x++){
+			for (x = 0; x < 128; x++)
 				set_pixel(&s, x, 31, true);
-			}
+			
 			
 			if (cactusPos<= 10)
 				cactusPos += 128;
@@ -188,7 +186,3 @@ void switch_state(enum game_state st){
 	state = st;
 	init = 1;
 }
-
-
-
-
