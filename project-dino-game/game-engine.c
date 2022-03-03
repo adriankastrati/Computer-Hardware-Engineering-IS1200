@@ -20,24 +20,22 @@ bool is_collision(Screen *screen, const uint8_t texture[], uint8_t width, uint8_
 			if(x+j >= 128 || y+i >= 32)
 				continue;
 
-			if(get_pixel(&screen, x + j, y + i) && texture[i * width + j])//
-				return true;
-		}
-	}
-
-	return false;
-}/*
-bool collided(const uint8_t texture[], uint8_t width, uint8_t height, uint8_t at_x, uint8_t at_y)
-{
-	for(i = 0; i < height; i++)
-	{
-		for(j = 0; j < width; j++)
-		{
-			if(texture[(i * width + j])
+			if(get_pixel(&screen, x + j, y + i) && texture[i * width + j])
 				return true;
 		}
 	}
 
 	return false;
 }
-*/
+
+//taken from internet https://en.wikipedia.org/wiki/Xorshift
+/* The state array must be initialized to not be all zero in the first four words */
+uint32_t xorshift32(struct rand_state *state)
+{
+	/* Algorithm "xor" from p. 4 of Marsaglia, "Xorshift RNGs" */
+	uint32_t x = state->a;
+	x ^= x << 13;
+	x ^= x >> 17;
+	x ^= x << 5;
+	return state->a = x;
+}

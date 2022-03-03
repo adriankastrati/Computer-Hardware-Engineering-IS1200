@@ -22,6 +22,7 @@ struct Object{
 };
 
 
+
 int main(){
 	display_init();
 	
@@ -35,6 +36,12 @@ int main(){
 
 	uint8_t x;
 	uint8_t cactusPos = 100; 
+
+	unsigned char random_value;
+	struct rand_state rand;
+	rand.a = 1;
+	int current_random;
+
 
 	uint8_t n;
 	uint8_t dino_ground_pos = 19;
@@ -69,7 +76,11 @@ int main(){
 			case highscore_menu:
 			break;
 
-			case in_game:	      						      
+			case in_game:
+				random_value = xorshift32(&rand);
+				random_value = random_value % 20;
+
+	      						      
 				if(btn_up() && !jumping && !falling){
 				
 					jumping = true;
@@ -147,7 +158,7 @@ int main(){
 
 				if(objects[x].x_pos <= 10)
 				{
-					objects[x].x_pos += 150;
+					objects[x].x_pos = objects[x].x_pos + random_value;
 				}
 			}
 
@@ -181,6 +192,5 @@ void switch_state(enum game_state st){
 	state = st;
 	init = 1;
 }
-
 
 

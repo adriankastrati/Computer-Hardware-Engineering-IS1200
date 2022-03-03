@@ -68,23 +68,41 @@ bool is_valid_pixel(int x, int y);
 /*
 void edit_game_object(graphics_object *game_object, const uint8_t texture_in[], uint8_t x_pos, uint8_t y_pos, int width, int height);
 */
+
 //score.h
 typedef struct Score{
     char name[3];
     int points;
     int position; 
-
 } Score;
-extern struct Score score_list[32];
-void set_name(Score *score, char a, char b, char c);
 
+extern struct Score score_list[32];
+
+void set_name(Score *score, char a, char b, char c);
 Score create_Score(char* new_name, int points);
 void init_highscore_list();
 void delete_score_list();
 void update_list(Score save_score);
 void print_score(Score ig, int line);
+void set_name(Score *score, char a, char b, char c);
+
 
 //game.h
 bool is_collision(Screen *screen, const uint8_t texture[], uint8_t width, uint8_t height, uint8_t x, uint8_t y);
 
+
+//random.h
+
+struct rand_state{
+  uint32_t a;
+};
+
+/* The state word must be initialized to non-zero */
+
+uint32_t xorshift32(struct rand_state *state);
+
+xorwow(struct rand_state *state);
+
 #endif
+
+

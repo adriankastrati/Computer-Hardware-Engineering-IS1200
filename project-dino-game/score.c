@@ -105,9 +105,6 @@ void print_score(Score ig, int line){
 }
 
 void set_name(Score *score, char a, char b, char c){
-    
-    
-
     score -> name[0] = a;
     score -> name[1] = b;
     score -> name[2] = c;
