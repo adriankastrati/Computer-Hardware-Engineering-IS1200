@@ -15,11 +15,25 @@ int jump_value = 0;
 bool jumping = false;
 bool falling = false;
 
-
 struct Object{
 	uint8_t x_pos;
 	uint8_t y_pos;
 };
+
+struct xorshift32_state {
+  uint32_t a;
+};
+
+/* The state word must be initialized to non-zero */
+uint32_t xorshift32(struct xorshift32_state *state)
+{
+	/* Algorithm "xor" from p. 4 of Marsaglia, "Xorshift RNGs" */
+	uint32_t x = state->a;
+	x ^= x << 13;
+	x ^= x >> 17;
+	x ^= x << 5;
+	return state->a = x;
+}
 
 
 int main(){
@@ -94,14 +108,7 @@ int main(){
 					}
 				}
 
-			//print dino
-						
-
-			
-
-			//check if texture collide with objects on screen, freeze screen
-
-			for(x = 0; x < 4; x++){
+			for(x = 0; x < 4; x++){ //dino anim
 					
 					clear_screen(&s);
 					if(dino_anim_stage <= 1)
@@ -181,6 +188,7 @@ void switch_state(enum game_state st){
 	state = st;
 	init = 1;
 }
+
 
 
 
