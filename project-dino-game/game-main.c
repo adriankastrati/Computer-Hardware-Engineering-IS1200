@@ -42,6 +42,9 @@ int main(){
 	rand.a = 1;
 	int current_random;
 
+	char cloud_counter = 0;
+	uint16_t cloud_speed = 0;
+
 
 	uint8_t n;
 	uint8_t dino_ground_pos = 19;
@@ -57,6 +60,7 @@ int main(){
 	struct Object grassObj3 = { 25, 29 };
 	struct Object grassObj4 = { 125, 29 };
 	struct Object grassObj5 = { 150, 29 };
+
 
 
 	struct Object objects[] = { 
@@ -111,9 +115,7 @@ int main(){
 			
 
 			//check if texture collide with objects on screen, freeze screen
-
 			for(x = 0; x < 4; x++){
-					
 					clear_screen(&s);
 					if(dino_anim_stage <= 1)
 						texture2screen(&s, dinosaur1, 12, 12, 40, dino_ground_pos - jump_value);
@@ -158,7 +160,7 @@ int main(){
 
 				if(objects[x].x_pos <= 10)
 				{
-					objects[x].x_pos = objects[x].x_pos + random_value;
+					objects[x].x_pos = objects[x].x_pos + 128+ random_value;
 				}
 			}
 
@@ -178,6 +180,14 @@ int main(){
 			for (x = 0; x < 128; x++){
 				set_pixel(&s, x, 31, true);
 			}
+
+			cloud_counter++;
+			if(cloud_counter == 3){
+				cloud_counter = 0;
+				cloud_speed ++;
+			}
+
+			
 		}		
 		
 		display_screen(&s);

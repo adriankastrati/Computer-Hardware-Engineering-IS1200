@@ -91,16 +91,13 @@ void set_name(Score *score, char a, char b, char c);
 bool is_collision(Screen *screen, const uint8_t texture[], uint8_t width, uint8_t height, uint8_t x, uint8_t y);
 
 
-//random.h
-
+//random.h, //taken from internet https://en.wikipedia.org/wiki/Xorshift
 struct rand_state{
   uint32_t a;
 };
-
 /* The state word must be initialized to non-zero */
 
 uint32_t xorshift32(struct rand_state *state);
-
 xorwow(struct rand_state *state);
 
 #endif
