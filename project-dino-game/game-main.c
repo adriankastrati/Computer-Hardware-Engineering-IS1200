@@ -5,7 +5,7 @@
 #include <stdbool.h>
 #include "graphics.h"
 
-#define JUMP_HEIGHT 20
+#define JUMP_HEIGHT 19
 
 enum game_state{main_menu, highscore_menu, in_game, defeat_screen};
 enum game_state state = in_game;
@@ -29,15 +29,20 @@ int main(){
 	Screen s;
 	clear_screen(&s);
 	display_screen(&s);
-	
+
+	Score score;
+	score.points = 0;
+	int speed = 25;
 
 	uint8_t x;
 	uint8_t cactusPos = 100; 
 
+	uint8_t dead = 0;
+
 	unsigned char random_value;
 	struct rand_state rand;
 	rand.a = 1;
-	int old_random_value = 1;
+	int current_random;
 
 	char cloud_counter = 0;
 	uint16_t cloud_pos = 128;
@@ -60,7 +65,7 @@ int main(){
 	struct Object grassObj4 = { 125, 29 };
 	struct Object grassObj5 = { 150, 29 };
 
-
+	uint16_t loop1;
 
 	struct Object objects[] = { 
 		cactusObj1, cactusObj2, cactusObj3, cactusObj4, grassObj1, grassObj2, grassObj3, grassObj4, grassObj5
@@ -72,18 +77,31 @@ int main(){
 		clear_screen(&s); // clears screen before next frame
 		switch(state)
 		{
-			
+			uint16_t loop1 = 0;
+
 			case main_menu:
 			break;
 
 			case highscore_menu:
 			break;
 
-			case in_game:
-				rand.a = old_random_value;
-				random_value = xorshift32(&rand);
-				random_value = random_value % 50;
+			case defeat_screen:
+				while(1){
+					delay(1000);
+						if(btn_up()){
+							
+							display_string(0 ,"You died!");
+							display_string(1, itoaconv(score.points));
+							display_string(2 ,"");
+							display_string(3 ,"");
+							display_update();
+						}
+					}
+			break;
 
+			case in_game:
+				random_value = xorshift32(&rand);
+				random_value = random_value % 20;
 	      
 				if(btn_up() && !jumping && !falling)
 					jumping = true;
@@ -123,7 +141,7 @@ int main(){
 
 					if(is_collision(&s, cactus, 8, 8, objects[x].x_pos, objects[x].y_pos))
 					{
-						while(1);
+						dead = 1;
 					}
 			}
 			
@@ -133,6 +151,8 @@ int main(){
 				dino_anim_stage = 0;
 
 			for(x = 0; x < num_of_objects; x++){
+	
+
 				if(x < 4)
 					texture2screen(&s, cactus, 8, 8, objects[x].x_pos, objects[x].y_pos);
 				else
@@ -141,13 +161,17 @@ int main(){
 				objects[x].x_pos --;
 
 				if(objects[x].x_pos <= 10){
-					while((random_value - old_random_value < 15) && x < 4){
-						random_value += 10 + random_value % 10 ;
+					if(x < 4){
+						score.points++;
+						
+						if((score.points % 2) && speed > 10)
+							speed -= 2;
 					}
 
-					old_random_value = random_value;
+					
+						
 					objects[x].x_pos += (random_value + 130);
-				}		
+				}
 			}
 
 			//print background
@@ -156,27 +180,16 @@ int main(){
 			for (x = 0; x < 128; x++)
 				set_pixel(&s, x, 31, true);
 
-			//ground
-			for (x = 0; x < 128; x++)
-				set_pixel(&s, x, 31, true);
 
-			texture2screen(&s, cloud, 8, 8, cloud_pos, 10+ cloud_y);
-			texture2screen(&s, big_cloud, 12, 8, big_cloud_pos, 5 + cloud_y);
+			texture2screen(&s, cloud, 8, 8, cloud_pos, 5 + cloud_y);
+			texture2screen(&s, big_cloud, 12, 8, big_cloud_pos, 0 + cloud_y);
+			
 			cloud_counter++;
 			if(cloud_counter == 10){
-				cloud_counter = 0;
-				cloud_pos--;
-				big_cloud_pos--;
-			}
-			if(cloud_pos <= 10)
-				cloud_pos += (random_value*2 + 300);
-			if(big_cloud_pos <= 10)
-				big_cloud_pos += (random_value*3 + 300);
-
-			if(cloud_dropping)
+				if(cloud_dropping)
 			{
 				cloud_y++;
-				if(cloud_y > 10)
+				if(cloud_y > 2)
 					cloud_dropping = false;
 			}
 			else
@@ -185,11 +198,24 @@ int main(){
 				if(cloud_y == 0)
 					cloud_dropping = true;
 			}
+				cloud_counter = 0;
+				cloud_pos--;
+				big_cloud_pos--;
+			}
+			if(cloud_pos <= 15)
+				cloud_pos += (random_value * 2 + 300);
+			if(big_cloud_pos <= 10)
+				big_cloud_pos += (random_value * 3 + 300);
+
 			
-		}		
+			
+		}
+
 		
 		display_screen(&s);
-		delay(20);
+		if (dead)
+		switch_state(defeat_screen);
+		delay(speed);
 		
 
 	}
