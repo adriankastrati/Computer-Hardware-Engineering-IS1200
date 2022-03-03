@@ -37,7 +37,7 @@ int main(){
 	unsigned char random_value;
 	struct rand_state rand;
 	rand.a = 1;
-	int current_random;
+	int old_random_value = 1;
 
 	char cloud_counter = 0;
 	uint16_t cloud_speed = 0;
@@ -79,8 +79,10 @@ int main(){
 			break;
 
 			case in_game:
+				rand.a = old_random_value;
 				random_value = xorshift32(&rand);
-				random_value = random_value % 20;
+				random_value = random_value % 50;
+
 	      
 				if(btn_up() && !jumping && !falling)
 					jumping = true;
@@ -129,8 +131,7 @@ int main(){
 			if(dino_anim_stage >= (dino_anim_frame_count+1)*2)
 				dino_anim_stage = 0;
 
-			for(x = 0; x < num_of_objects; x++)
-			{
+			for(x = 0; x < num_of_objects; x++){
 				if(x < 4)
 					texture2screen(&s, cactus, 8, 8, objects[x].x_pos, objects[x].y_pos);
 				else
@@ -138,8 +139,14 @@ int main(){
 
 				objects[x].x_pos --;
 
-				if(objects[x].x_pos <= 10)
+				if(objects[x].x_pos <= 10){
+					while((random_value - old_random_value < 15) && x < 4){
+						random_value += 10 + random_value % 10 ;
+					}
+
+					old_random_value = random_value;
 					objects[x].x_pos += (random_value + 130);
+				}		
 			}
 
 			//print background
