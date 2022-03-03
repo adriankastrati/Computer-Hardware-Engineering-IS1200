@@ -93,11 +93,10 @@ int main(){
 			case in_game:
 				random_value = xorshift32(&rand);
 				random_value = random_value % 20;
-
-	      						      
-				if(btn_up() && !jumping && !falling){
+	      
+				if(btn_up() && !jumping && !falling)
 					jumping = true;
-				}
+				
 
 				if(jumping){
 					jump_value ++;
@@ -113,9 +112,7 @@ int main(){
 					jump_value--;
 
 					if (jump_value == 0)
-					{
 						falling = false;
-					}
 				}
 
 			for(x = 0; x < 4; x++){ //dino anim
