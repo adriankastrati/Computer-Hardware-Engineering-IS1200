@@ -4,6 +4,6 @@
 ## Course contents
 * Programming: C & Mips 
 * Programming against micro-controller: ChipKit Uno32 & Basic I/O Shield
-* Processor construction: hazards, control unit
+* Processor construction: control & data hazards, control unit
 * Memory architectures: Caches and virtual memory
 * Parallel processors and programs
