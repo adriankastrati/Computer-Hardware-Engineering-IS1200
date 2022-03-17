@@ -25,18 +25,21 @@ void user_isr( void ){
 }
 
 /* Lab-specific initialization goes here */
-void labinit( void ){
-  //sets bits as output
+void labinit( void ){ 
+  //define pointer to adress for TRISE
   volatile int *p_TRISE =  0xbf886100;
+
+  //Sets bits 0-7 in TRISE register to 0, output
   *p_TRISE &= ~0xff; 
 
-  
+  //defines pointer to adress for PORTE
   volatile int *p_PORTE = 0xbf886110;
+  
+  //set bits 0-7 in adress PORTE to 0
   *p_PORTE &= ~0xff;
 
-  // set bits of 1111 1110 000 to input (buttons)
-  TRISD |= 0xfe0;
-
+  // set bits of 1111 1110 0000 to input (buttons & switches)
+  TRISDSET = 0xfe0;
 }
 
 /* This function is called repetitively from the main program */
@@ -45,20 +48,20 @@ void labwork( void ){
   int btn_3 = (getbtns() >> 1) & 0x1;
   int btn_4 = (getbtns() >> 2) & 0x1;
 
-  int switch_value = getsw() & 0xf;
+  //int switch_value = getsw() & 0xf;
 
   if(btn_4){
-    int new_time = (mytime & 0x0fff) | (switch_value << 12);
+    int new_time = (mytime & 0x0fff) | (getsw() << 12);
     mytime = new_time; 
   }
   
   if(btn_3){
-    int new_time = (mytime & 0xf0ff) | (switch_value << 8);
+    int new_time = (mytime & 0xf0ff) | (getsw() << 8);
     mytime = new_time;  
   }
 
   if(btn_2){
-    int new_time = (mytime & 0xff0f) | (switch_value << 4);
+    int new_time = (mytime & 0xff0f) | (getsw() << 4);
     mytime = new_time;  
   }
 

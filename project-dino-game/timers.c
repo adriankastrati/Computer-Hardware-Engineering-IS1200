@@ -3,11 +3,6 @@
 #include "graphics.h"  /* Declatations for these labs */ 
  #include <stdbool.h>
 
-#include <stdint.h>   /* Declarations of uint_32 and the like */
-#include <pic32mx.h>  /* Declarations of system-specific addresses etc */
-#include "graphics.h"  /* Declatations for these labs */ 
- #include <stdbool.h>
-
 void init_timer(){
   /*//stops timer 
   T2CONCLR = 1 << 15;

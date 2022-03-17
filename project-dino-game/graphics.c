@@ -13,31 +13,8 @@
   /* Declatations for these labs */
 
 
-//av nån anledning kan den ej vara i graphics.c och i graphics.h men score kan googla
-//constructor for ingame objects 
-/*
-void edit_game_object(graphics_object *game_object, const uint8_t texture_in[], uint8_t x_pos, uint8_t y_pos, int width, int height){
-	game_object -> x_pos = x_pos;
-	game_object -> y_pos = y_pos;
-	game_object -> width = width;
-	game_object -> height = height;
-	
-	int number_elements_texture = sizeof(texture_in) / sizeof(uint8_t);
-	int i;
-	
-	for(i = 0; i < number_elements_texture; i++){
-		game_object -> texture[i] = texture_in[i];
-	}
-
-	while(i < (132 * 32)){		
-		game_object -> texture[i] = 0;
-		i++;
-	}
-}
-*/
-
 char textbuffer[4][16];
-
+//taken from lab-files
 const uint8_t const font[] = {
 	0, 0, 0, 0, 0, 0, 0, 0,
 	0, 0, 0, 0, 0, 0, 0, 0,
@@ -168,6 +145,8 @@ const uint8_t const font[] = {
 	0, 0, 4, 2, 4, 2, 0, 0,
 	0, 120, 68, 66, 68, 120, 0, 0,
 };
+
+// Made by Deni Persson 
 const uint8_t const dinosaur1 [] = {
 	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
 	0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 
@@ -182,6 +161,7 @@ const uint8_t const dinosaur1 [] = {
 	0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0,
 	0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0,
 };
+// Made by Deni Persson 
 const uint8_t const dinosaur2 [] = {
 	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
 	0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 
@@ -196,6 +176,7 @@ const uint8_t const dinosaur2 [] = {
 	0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0,
 	0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0,
 };
+// Made by Deni Persson 
 const uint8_t const dinosaur3 [] = {
 	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
 	0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 
@@ -209,7 +190,7 @@ const uint8_t const dinosaur3 [] = {
 	0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0,
 	0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0,
 	0, 0, 0, 1, 1, 0, 1, 1, 0, 0, 0, 0, 
-};
+}; // Made by Deni Persson 
 const uint8_t const box [] = {
 	1, 1, 1, 1, 1, 1, 1, 1,
 	1, 0, 0, 0, 0, 0, 0, 1,
@@ -219,7 +200,7 @@ const uint8_t const box [] = {
 	1, 0, 0, 0, 0, 0, 0, 1,
 	1, 0, 0, 0, 0, 0, 0, 1,
 	1, 1, 1, 1, 1, 1, 1, 1,
-};
+};// Made by Deni Persson 
 const uint8_t const cloud [] = {
 	0, 0, 0, 0, 1, 0, 0, 0,
 	0, 0, 1, 1, 1, 1, 1, 0,
@@ -229,7 +210,7 @@ const uint8_t const cloud [] = {
 	0, 1, 1, 1, 0, 1, 0, 1,
 	1, 1, 1, 1, 1, 1, 1, 0,
 	0, 0, 0, 0, 0, 0, 0, 0,
-};
+};// Made by Deni Persson 
 const uint8_t const big_cloud [] = {
 	0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 
 	0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 
@@ -239,7 +220,7 @@ const uint8_t const big_cloud [] = {
 	0, 1, 1, 0, 1, 1, 0, 0, 1, 0, 1, 0, 
 	1, 0, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 
 	1, 1, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1, 
-};
+};// Made by Deni Persson 
 const uint8_t const cactus [] = {
 	0, 0, 0, 1, 1, 1, 0, 1,
 	0, 0, 0, 1, 1, 1, 0, 1,
@@ -249,7 +230,7 @@ const uint8_t const cactus [] = {
     1, 1, 1, 1, 1, 1, 0, 0,
 	0, 0, 0, 1, 1, 1, 0, 0,
     0, 0, 0, 1, 1, 1, 0, 0,
-};
+};// Made by Deni Persson 
 const uint8_t const grass1 [] = {
 	0, 1, 0, 0, 1, 0,
 	0, 1, 1, 0, 1, 1,

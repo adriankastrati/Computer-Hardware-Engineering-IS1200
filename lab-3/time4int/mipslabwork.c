@@ -31,46 +31,53 @@ void user_isr( void ){
 
     timeoutcount = 0;
   }
-    IFSCLR(0) = 1 << 8;
 
+  //reset time-out event-flag
+ // IFSCLR(0) = 1 << 8;
 }
 
-/* Lab-specific initialization goes here */
 void labinit( void ){
   volatile int *p_TRISE =  0xbf886100;
   *p_TRISE &= ~0xff; 
+
   volatile int *p_PORTE = 0xbf886110;
   *p_PORTE &= ~0xff;
-  TRISD &= 0xfe0;
-   
-  //stop timer 2
-  T2CONCLR = 1 << 15;
 
-  //clear timer
-  TMR2 = 0x0;
-  
-  //period register
+  TRISD &= 0xfe0;
+
+  //Timer 2 operates at 80 MHz
+  //clears timer 2 bit 15, stops timer
+  T2CONCLR = 1 << 15;
+ 
+  //prescale 256
+  T2CONSET = 0x7 << 4;
+
+  //seperate timer
+  T2CONCLR = 1 << 3;
+
+  //internal timer
+  T2CONCLR = 1 << 1;
+
+  //period register to 31250
   PR2 = 0x7a12;
   
-  //prescale
-  T2CONSET = 7 << 4;
-  
-  IPCSET(2) = 0x3f;
+ //resets the timervalue
+  TMR2 = 0x0;
 
-  //clear flag
+  //clear IF2
   IFSCLR(0) = 1 << 8;
 
-  // enable timer interrupts  
+  //enable interrupt 2
   IECSET(0) = 1 << 8;
+
+  //sets priority iterrupt 2
+  IPCSET(2) = 0x3f;
+
 
   enable_interrupt();
 
   //start timer
   T2CONSET = 1 << 15;
-  
-  //configure and set the subpriority levels in IPC2 register
-  //Set the T2IE interrupt enable bit in the IEC2
-
 }
 
 /* This function is called repetitively from the main program */

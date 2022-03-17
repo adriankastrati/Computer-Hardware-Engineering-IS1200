@@ -35,57 +35,74 @@ void labinit( void ){
 
   TRISD &= 0xfe0;
 
-  /*add code to initialize Timer 2 for timeouts every 100 ms (that is 10 timeouts per second). 
-  //Be prepared to justify your choices of clock-rate divider and time-out period.
-
   //Timer 2 operates at 80 MHz
 
-  //clears timer 2 bit 15 and 1
-  /*T2CONCLR = 1 << 15;
 
+  //clears timer 2 bit 15, stops timer
+  T2CONCLR = 1 << 15;
+ 
+  //prescale 256
+  T2CONSET = 0x7 << 4;
+
+  //seperate timer
+  T2CONCLR = 1 << 3;
+
+  //internal timer
   T2CONCLR = 1 << 1;
+
+  //period register to 31250
+  PR2 = 0x7a12;
   
-  //resets the timervalue
+ //resets the timervalue
   TMR2 = 0x0;
-
-  //set register to 0x7a12
-
-  //prescale
-  T2CONSET = 0x111 << 4;
 
   //clear IF2
   IFSCLR(0) = 1 << 8;
-  */
 
-  PR2 = 0x7a12;
-  T2CON = 0000000001110000;
   //start timer
   T2CONSET = 1 << 15;
-  
+
+  /*
+  //sets period register
+  PR2 = 0x7a12;
+
+  //resets the timervalue
+  TMR2 = 0x0;
+
+  //clear IF2
+  IFSCLR(0) = 1 << 8;
+
+  //T2CON = 0000000001110000;
+
+  T2CONSET = 1 << 15;
+  */
 }
 
 /* This function is called repetitively from the main program */
 void labwork( void ){  
   int button_value = getbtns() & 0x3;
+  int switch_value = getsw() & 0xf;
+  
   int btn_2 = getbtns() & 0x1;
   int btn_3 = (getbtns() >> 1) & 0x1;
   int btn_4 = (getbtns() >> 2) & 0x1;
-  int switch_value = getsw() & 0xf;
   int count = 0;
 
 
+  //int switch_value = getsw() & 0xf;
+
   if(btn_4){
-    int new_time = (mytime & 0x0fff) | (switch_value << 12);
+    int new_time = (mytime & 0x0fff) | (getsw() << 12);
     mytime = new_time; 
   }
   
   if(btn_3){
-    int new_time = (mytime & 0xf0ff) | (switch_value << 8);
+    int new_time = (mytime & 0xf0ff) | (getsw() << 8);
     mytime = new_time;  
   }
 
   if(btn_2){
-    int new_time = (mytime & 0xff0f) | (switch_value << 4);
+    int new_time = (mytime & 0xff0f) | (getsw() << 4);
     mytime = new_time;  
   }
 
@@ -93,18 +110,15 @@ void labwork( void ){
   //period register when timer hiys
 
 
-  while(count < 256){
-
-    if( (IFS(0) & 0x100) == 0x100 ){      
-      count++;
-      //clear flag
-      IFSCLR(0) = 1 << 8;
-    } 
+  //resets time-out event-flag
+  
+  if( (IFS(0) >> 8) & 1){ 
+    timeoutcount++;
+    
+    //clear flag
+    IFSCLR(0) = 1 << 8;
   }
 
-  timeoutcount++;
-
-  
   if(timeoutcount == 10){
     time2string( textstring, mytime );
     display_string( 3, textstring );
@@ -120,5 +134,6 @@ void labwork( void ){
     display_image(96, icon);
     timeoutcount = 0;
   }
+  
 
 }

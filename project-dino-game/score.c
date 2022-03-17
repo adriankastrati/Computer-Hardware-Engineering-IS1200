@@ -6,7 +6,7 @@
 #include "graphics.h"
 
 Score score_list[MAX_SCORES];
-
+// Made by Adrian Kastrati 
 Score create_score(){
     Score new;
     int i;
@@ -18,7 +18,7 @@ Score create_score(){
     
     return new;
 }
-
+// Made by Adrian Kastrati 
 void init_highscore_list(){
     int i;
     int n;
@@ -32,7 +32,7 @@ void init_highscore_list(){
     }
 }
 
-
+// Made by Adrian Kastrati 
 void update_list(Score *save_score){
     char edited = 0;
     int i;
@@ -62,7 +62,7 @@ void update_list(Score *save_score){
         score_list[i].position = i + 1;
     }
 }
-
+// Made by Adrian Kastrati 
 void print_score(Score ig, int line){    
     //position 2 elements, 2 spaces, name 3 elements, 2 spaces, max 4 digits digits, 1 null terminated
     char ret_arr[14];
@@ -104,7 +104,7 @@ void print_score(Score ig, int line){
 
     display_string(line, ret_arr);
 }
-
+// Made by Adrian Kastrati 
 void set_name(Score *score, char a, char b, char c){
     score -> name[0] = a;
     score -> name[1] = b;
