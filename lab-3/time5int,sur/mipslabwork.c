@@ -37,10 +37,9 @@ void user_isr( void ){
     IFSCLR(0) = 1 << 8;
   }
 
-  if(IFS(0) & 0x80){
+  if(IFS(0) >> 15 & 0x1){
     PORTE = PORTE + 0x1; // Increment value in PORTE
-
-    IFSCLR(0) = 0x80; // Clear INT1IF
+    IFSCLR(0) = 1 << 15;
   }
 }
 
@@ -82,12 +81,13 @@ void labinit( void ){
 
   //external interrupt
   //disable
-  IECCLR(0) = 0x080;
+  
 
-  INTCONCLR = 0x0002;
+  ///enable external interupt
+  IECSET(0) = 1 << 15;
 
-  //prio, subprio
-  IPCSET(1) = 0x1b00;
+  //clear flag
+  IFSCLR(0) = 1 << 15;
 
 
   //externa interrupt priority
