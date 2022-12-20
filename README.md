@@ -7,3 +7,6 @@
 * Processor construction: control & data hazards, control unit
 * Memory architectures: Caches and virtual memory
 * Parallel processors and programs
+---
+Dino Game Project
+https://youtu.be/_ussDt22ids
